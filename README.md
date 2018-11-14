@@ -1,7 +1,6 @@
 <h1 align="center">
   <br>
-  <!-- TODO: add icon -->
-    <!-- <img src="" alt="extension-icon" width="200"> -->
+    <img src="https://github.com/mvitlov/vscode-db-explorer-firebird/blob/master/images/icon.png?raw=true" alt="extension-icon" width="200">
   <br>
   DB Explorer for Firebird&reg; databases
   <br>
@@ -24,8 +23,7 @@
 
 This extension allows you to connect directly to your [Firebird&reg; databases](https://firebirdsql.org/), list tables and fields, run queries, display/export results and more.
 
-<!-- TODO: add banner  -->
-<!-- ![banner]() -->
+![banner](https://github.com/mvitlov/vscode-db-explorer-firebird/blob/master/images/banner.jpg?raw=true)
 
 ## Supported features
 
@@ -89,6 +87,4 @@ This extensions is still in the early development stage, and as such it may not 
 
 ## Bugs reports & Features requests
 
-<!-- TODO: add link -->
-
-You can submit a bug report or a feature suggestion via [GitHub Issue Tracker]().
+You can submit a bug report or a feature suggestion via [GitHub Issue Tracker](https://github.com/mvitlov/vscode-db-explorer-firebird/issues).
