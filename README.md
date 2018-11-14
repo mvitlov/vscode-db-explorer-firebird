@@ -8,18 +8,17 @@
 </h1>
 <h4 align="center">Explore and run queries against your Firebird&reg; databases without leaving VS Code.</h4>
 
-<!-- TODO: add badges -->
-<!-- <p align="center">
-  <a href="https://">
-    <img src="https://" alt="badge1">
+<p align="center">
+  <a href="https://marketplace.visualstudio.com/items?itemName=marinv.vscode-db-explorer-firebird">
+    <img src="http://vsmarketplacebadge.apphb.com/version/marinv.vscode-db-explorer-firebird.svg" alt="badge-version">
   </a>
-  <a href="https://">
-    <img src="" alt="bdage2">
+  <a href="https://marketplace.visualstudio.com/items?itemName=marinv.vscode-db-explorer-firebird">
+    <img src="http://vsmarketplacebadge.apphb.com/installs/marinv.vscode-db-explorer-firebird.svg" alt="badge-installs">
   </a>
-  <a href="https://">
+  <!-- <a href="https://">
     <img src="https://" alt="badge3">
-  </a>
-</p> -->
+  </a> -->
+</p>
 
 This extension allows you to connect directly to your [Firebird&reg; databases](https://firebirdsql.org/), list tables and fields, run queries, display/export results and more.
 
@@ -41,7 +40,7 @@ This extension allows you to connect directly to your [Firebird&reg; databases](
 
 <!-- TODO: add link -->
 
-1. [Install the extension]()
+1. [Install the extension](https://marketplace.visualstudio.com/items?itemName=marinv.vscode-db-explorer-firebird)
 2. Restart VS Code and switch to DB Explorer view by clicking the newly added **Firebird icon** located at the VS Code **Activity Bar**.
 
 ## Using the extension
