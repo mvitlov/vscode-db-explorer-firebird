@@ -80,7 +80,7 @@ The results will be displayed in new tab.
 - `firebird.codeCompletion.keywords: <boolean>` | Enable Code Completion for Firebird Reserved Words (Default **true**)
 - `firebird.codeCompletion.database: <boolean>` | Enable Code Completion for Table and Field names (Default **true**)
 - `firebird.logLevel: <string>` | Logging level to display in the output channel. (Default **INFO**)
-- `firebird.maxTablesCount: <number>` | The max table count shown in the tree view. Use 0 to show all tables. (Default **10**)
+- `firebird.maxTablesCount: <number>` | The max table count shown in the tree view. 0 - show all tables. (Default **10**)
 - `firebird.recordsPerPage: <string>` | Number of records to display per page. (Default **10**)
 
 ## Disclaimer
