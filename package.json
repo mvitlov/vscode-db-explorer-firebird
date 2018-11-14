@@ -1,0 +1,292 @@
+{
+  "name": "vscode-db-explorer-firebird",
+  "displayName": "DB Explorer For Firebird Databases",
+  "description": "A tool for exploring and querying Firebird Databases directly inside VS Code.",
+  "version": "0.0.1",
+  "author": {
+    "name": "Marin Vitlov"
+  },
+  "publisher": "marinv",
+  "icon": "resources/img/icon.png",
+  "galleryBanner": {
+    "color": "#f1c40f",
+    "theme": "light"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mvitlov/vscode-db-explorer-firebird"
+  },
+  "bugs": {
+    "url": "https://github.com/mvitlov/vscode-db-explorer-firebird/issues"
+  },
+  "engines": {
+    "vscode": "^1.28.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "Firebird",
+    "Database",
+    "DB",
+    "RDBMS",
+    "FDB",
+    "GDB",
+    "SQL"
+  ],
+  "activationEvents": [
+    "onLanguage:sql",
+    "onView:firebird-explorer",
+    "onCommand:firebird.explorer.addConnection",
+    "onCommand:firebird.newQuery",
+    "onCommand:firebird.runQuery"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "firebird.explorer.addConnection",
+        "title": "Add New Connection",
+        "category": "Firebird",
+        "icon": {
+          "light": "resources/icons/light/add-connection.svg",
+          "dark": "resources/icons/dark/add-connection.svg"
+        }
+      },
+      {
+        "command": "firebird.explorer.newSqlDocument",
+        "title": "New Sql Query",
+        "category": "Firebird",
+        "icon": {
+          "light": "resources/icons/light/new-sql.svg",
+          "dark": "resources/icons/dark/new-sql.svg"
+        }
+      },
+      {
+        "command": "firebird.explorer.refresh",
+        "title": "Refresh",
+        "category": "Firebird",
+        "icon": {
+          "light": "resources/icons/light/refresh.svg",
+          "dark": "resources/icons/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "firebird.removeHost",
+        "title": "Remove Host",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.setActive",
+        "title": "Set Active",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.chooseActive",
+        "title": "Choose Active Database",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.removeDatabase",
+        "title": "Remove Database",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.showDatabaseInfo",
+        "title": "Show Database Info",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.runQuery",
+        "title": "Run Firebird Query",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.newQuery",
+        "title": "New Query",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.selectAllRecords",
+        "title": "Select All Records",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.table.dropTable",
+        "title": "Drop Table",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.showTableInfo",
+        "title": "Show Table Info",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.selectFieldRecords",
+        "title": "Select All Field Records",
+        "category": "Firebird"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "firebird-tree",
+          "title": "Firebird",
+          "icon": "resources/firebird-explorer-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "firebird-tree": [
+        {
+          "id": "firebird-explorer",
+          "name": "DB Explorer"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "firebird.runQuery",
+        "key": "ctrl+alt+q",
+        "when": "editorLangId == sql"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "firebird.runQuery",
+          "when": "editorLangId == sql",
+          "group": "navigation"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "firebird.explorer.addConnection",
+          "when": "view == firebird-explorer",
+          "group": "navigation@1"
+        },
+        {
+          "command": "firebird.explorer.newSqlDocument",
+          "when": "view == firebird-explorer",
+          "group": "navigation@2"
+        },
+        {
+          "command": "firebird.explorer.refresh",
+          "when": "view == firebird-explorer",
+          "group": "navigation@3"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "firebird.removeHost",
+          "when": "view == firebird-explorer && viewItem == host",
+          "group": "firebird@2"
+        },
+        {
+          "command": "firebird.showDatabaseInfo",
+          "when": "view == firebird-explorer && viewItem == database",
+          "group": "first@0"
+        },
+        {
+          "command": "firebird.setActive",
+          "when": "view == firebird-explorer && viewItem == database",
+          "group": "first@1"
+        },
+        {
+          "command": "firebird.newQuery",
+          "when": "view == firebird-explorer && viewItem == database",
+          "group": "first@2"
+        },
+        {
+          "command": "firebird.removeDatabase",
+          "when": "view == firebird-explorer && viewItem == database",
+          "group": "second@0"
+        },
+        {
+          "command": "firebird.showTableInfo",
+          "when": "view == firebird-explorer && viewItem == table",
+          "group": "firebird@0"
+        },
+        {
+          "command": "firebird.selectAllRecords",
+          "when": "view == firebird-explorer && viewItem == table",
+          "group": "firebird@1"
+        },
+        {
+          "command": "firebird.table.dropTable",
+          "when": "view == firebird-explorer && viewItem == table",
+          "group": "other@0"
+        },
+        {
+          "command": "firebird.selectFieldRecords",
+          "when": "view == firebird-explorer && viewItem == field",
+          "group": "firebird@0"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "Firebird Explorer",
+      "properties": {
+        "firebird.codeCompletion.keywords": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable code completion for Firebird-specific keywords."
+        },
+        "firebird.codeCompletion.database": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable code completion for Firebird Database table and field names."
+        },
+        "firebird.logLevel": {
+          "type": "string",
+          "enum": [
+            "DEBUG",
+            "INFO",
+            "WARN",
+            "ERROR"
+          ],
+          "default": "INFO",
+          "description": "Logging level in the output channel."
+        },
+        "firebird.maxTablesCount": {
+          "type": "integer",
+          "default": 10,
+          "description": "The maximum table count shown in the tree view. Use 0 to show all tables."
+        },
+        "firebird.recordsPerPage": {
+          "type": "string",
+          "enum": [
+            "10",
+            "25",
+            "50",
+            "100",
+            "All records"
+          ],
+          "default": "10",
+          "description": "Number of records per page to show in results view."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.21",
+    "tslint": "^5.8.0",
+    "@types/node": "^8.10.25",
+    "@types/mocha": "^2.2.42"
+  },
+  "dependencies": {
+    "node-firebird": "^0.8.6",
+    "uuid": "^3.1.0"
+  }
+}

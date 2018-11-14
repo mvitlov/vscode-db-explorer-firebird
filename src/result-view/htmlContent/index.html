@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Import stylesheets -->
+    <link type="text/css" rel="stylesheet" href="/css/loader.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="/css/datatables.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="/css/app.css" media="screen,projection" />
+  </head>
+
+  <body>
+    <div class="img-wrapper"><img src="/img/icon.png" /></div>
+    <div id="loader-wrapper">
+      <div id="loader"></div>
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
+    </div>
+    <div id="content">
+      <div class="container" id="zero-results" style="display:none; width:100%"><p>Records found: 0</p></div>
+      <div class="container" style="width:100%">
+        <table id="example" class="row-border order-column cell-border compact display" style="width:100%;"></table>
+      </div>
+    </div>
+
+    <!-- JavaScript at end of body for optimized loading -->
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/pdfmake.min.js"></script>
+    <script type="text/javascript" src="/js/vfs_fonts.min.js"></script>
+    <script type="text/javascript" src="/js/datatables.min.js"></script>
+    <script type="text/javascript" src="/js/app.js"></script>
+  </body>
+</html>

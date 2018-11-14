@@ -1,0 +1,206 @@
+div.container {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+div.img-wrapper {
+  position: fixed;
+  bottom: 2%;
+  right: 1%;
+  z-index: 11000;
+  opacity: 0.1;
+}
+div.img-wrapper img {
+  width: 100px;
+}
+
+/* DARK STYLE TABLE */
+body.vscode-dark .ellipsis {
+  color: var(--vscode-editor-foreground) !important;
+}
+body.vscode-dark .dataTables_info,
+.dataTables_filter {
+  color: var(--vscode-editor-foreground) !important;
+}
+
+body.vscode-dark .sorting_1 {
+  background-color: var(--vscode-editor-selectionBackground) !important;
+  color: var(--vscode-editor-selectionForeground) !important;
+}
+
+body.vscode-dark .dt-button.buttons-collection:hover {
+  background: var(--vscode-button-hoverBackground) !important;
+}
+
+body.vscode-dark .dt-button-collection {
+  background: var(--vscode-sideBar-background) !important;
+  border-radius: 0;
+}
+
+body.vscode-dark .paginate_button {
+  color: var(--vscode-button-foreground) !important;
+  border: none !important;
+  background-color: transparent !important;
+}
+
+body.vscode-dark .paginate_button.current,
+.buttons-collection,
+.dt-button {
+  border: none !important;
+  color: var(--vscode-button-foreground) !important;
+  background: var(--vscode-button-background) !important;
+}
+body.vscode-dark .paginate_button:hover,
+.buttons-collection:hover {
+  border: none !important;
+  background: var(--vscode-button-hoverBackground) !important;
+}
+
+body.vscode-dark .paginate_button.disabled {
+  color: var(--vscode-editor-foreground) !important;
+  background-color: var(--vscode-editor-background) !important;
+}
+
+body.vscode-dark th {
+  background-color: var(--vscode-sideBar-background);
+  color: var(--vscode-sideBar-foreground);
+}
+
+body.vscode-dark tr {
+  background-color: transparent !important;
+}
+
+body.vscode-dark table.dataTable thead .sorting_asc {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23ECF0F1;%7D %3C/style%3E%3Cpath class='st0' d='M89.7,49.6L67.2,26.1c-1.8-1.9-4.6-1.9-6.4,0L38.3,49.6c-2.8,3-0.8,8.1,3.2,8.1h44.9 C90.5,57.7,92.5,52.6,89.7,49.6z'/%3E%3C/svg%3E%0A");
+}
+body.vscode-dark table.dataTable thead .sorting_desc {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23ECF0F1;%7D %3C/style%3E%3Cpath class='st0' d='M41.5,70.3h44.9c4,0,6.1,5.1,3.2,8.1l-22.5,23.5c-1.8,1.9-4.6,1.9-6.4,0L38.3,78.4 C35.5,75.4,37.5,70.3,41.5,70.3z'/%3E%3C/svg%3E%0A");
+}
+body.vscode-dark table.dataTable thead .sorting {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%237F8C8D;%7D %3C/style%3E%3Cpath class='st0' d='M41.5,70.3h44.9c4,0,6.1,5.1,3.2,8.1l-22.5,23.5c-1.8,1.9-4.6,1.9-6.4,0L38.3,78.4 C35.5,75.4,37.5,70.3,41.5,70.3z M89.7,49.6L67.2,26.1c-1.8-1.9-4.6-1.9-6.4,0L38.3,49.6c-2.8,3-0.8,8.1,3.2,8.1h44.9 C90.5,57.7,92.5,52.6,89.7,49.6z'/%3E%3C/svg%3E%0A");
+}
+
+/* LIGHT STYLE TABLE */
+body.vscode-light .dataTables_info,
+.dataTables_filter {
+  color: var(--vscode-editor-foreground) !important;
+}
+
+body.vscode-light .sorting_1 {
+  background-color: var(--vscode-editor-selectionBackground) !important;
+  color: var(--vscode-editor-selectionForeground) !important;
+}
+body.vscode-light .dt-button.buttons-collection:hover {
+  background: var(--vscode-button-hoverBackground) !important;
+}
+
+body.vscode-light .dt-button-collection {
+  background: var(--vscode-sideBar-background) !important;
+  border-radius: 0;
+}
+body.vscode-light .paginate_button {
+  color: var(--vscode-editor-foreground) !important;
+  border: none !important;
+  background-color: transparent !important;
+}
+
+body.vscode-light .paginate_button.current,
+.buttons-collection,
+.dt-button {
+  border: none !important;
+  color: var(--vscode-button-foreground) !important;
+  background: var(--vscode-button-background) !important;
+}
+body.vscode-light .paginate_button:hover,
+.buttons-collection:hover {
+  border: none !important;
+  background: var(--vscode-button-hoverBackground) !important;
+}
+
+body.vscode-light .paginate_button.disabled {
+  color: var(--vscode-editor-foreground) !important;
+  background-color: var(--vscode-editor-background) !important;
+}
+
+body.vscode-light th {
+  background-color: var(--vscode-sideBar-background);
+  color: var(--vscode-sideBar-foreground);
+}
+
+body.vscode-light tr {
+  background-color: transparent !important;
+}
+
+body.vscode-light table.dataTable thead .sorting_asc {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%232C3E50;%7D %3C/style%3E%3Cpath class='st0' d='M89.7,49.6L67.2,26.1c-1.8-1.9-4.6-1.9-6.4,0L38.3,49.6c-2.8,3-0.8,8.1,3.2,8.1h44.9 C90.5,57.7,92.5,52.6,89.7,49.6z'/%3E%3C/svg%3E%0A");
+}
+body.vscode-light table.dataTable thead .sorting_desc {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%232C3E50;%7D %3C/style%3E%3Cpath class='st0' d='M41.5,70.3h44.9c4,0,6.1,5.1,3.2,8.1l-22.5,23.5c-1.8,1.9-4.6,1.9-6.4,0L38.3,78.4 C35.5,75.4,37.5,70.3,41.5,70.3z'/%3E%3C/svg%3E%0A");
+}
+body.vscode-light table.dataTable thead .sorting {
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23BDC3C7;%7D %3C/style%3E%3Cpath class='st0' d='M41.5,70.3h44.9c4,0,6.1,5.1,3.2,8.1l-22.5,23.5c-1.8,1.9-4.6,1.9-6.4,0L38.3,78.4 C35.5,75.4,37.5,70.3,41.5,70.3z M89.7,49.6L67.2,26.1c-1.8-1.9-4.6-1.9-6.4,0L38.3,49.6c-2.8,3-0.8,8.1,3.2,8.1h44.9 C90.5,57.7,92.5,52.6,89.7,49.6z'/%3E%3C/svg%3E%0A");
+}
+
+/* HIGH CONTRAST STYLE TABLE */
+body.vscode-high-contrast .ellipsis {
+  color: var(--vscode-editor-foreground) !important;
+}
+body.vscode-high-contrast .dataTables_info,
+.dataTables_filter {
+  color: var(--vscode-editor-foreground) !important;
+}
+
+body.vscode-high-contrast .sorting_1 {
+  /* background-color: var(--vscode-editor-selectionBackground) !important; */
+  background: transparent !important;
+  border: 1px solid var(--vscode-contrastActiveBorder) !important;
+  font-weight: bold;
+  /* color: var(--vscode-editor-selectionForeground) !important; */
+}
+
+body.vscode-high-contrast .dt-button-collection {
+  background: var(--vscode-sideBar-background) !important;
+  /* border-radius: 0; */
+}
+body.vscode-high-contrast .paginate_button {
+  color: var(--vscode-button-foreground) !important;
+  background-color: transparent !important;
+}
+
+body.vscode-high-contrast .paginate_button.current,
+.buttons-collection,
+.dt-button {
+  border: 1px solid var(--vscode-contrastActiveBorder) !important;
+  color: var(--vscode-button-foreground) !important;
+  background: var(--vscode-button-background) !important;
+}
+body.vscode-high-contrast .paginate_button:hover,
+.buttons-collection:hover {
+  border: 1px solid var(--vscode-contrastActiveBorder) !important;
+  background: transparent !important;
+}
+
+body.vscode-high-contrast .paginate_button.disabled {
+  color: var(--vscode-editor-foreground) !important;
+  background-color: var(--vscode-editor-background) !important;
+}
+
+body.vscode-high-contrast th {
+  background-color: var(--vscode-sideBar-background);
+  border: 1px solid var(--vscode-contrastActiveBorder) !important;
+  color: var(--vscode-editor-foreground);
+}
+
+body.vscode-high-contrast tr {
+  background-color: transparent !important;
+}
+
+body.vscode-high-contrast table.dataTable thead .sorting_asc {
+  background-image: url(sort_asc_light.png);
+}
+body.vscode-high-contrast table.dataTable thead .sorting_desc {
+  background-image: url(sort_desc_light.png);
+}
+body.vscode-high-contrast table.dataTable thead .sorting {
+  background-image: url(sort_both_light.png);
+}
