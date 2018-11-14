@@ -4,7 +4,8 @@
   "description": "A tool for exploring and querying Firebird Databases directly inside VS Code.",
   "version": "0.0.1",
   "author": {
-    "name": "Marin Vitlov"
+    "name": "Marin Vitlov",
+    "url": "https://github.com/mvitlov"
   },
   "publisher": "marinv",
   "icon": "resources/img/icon.png",
