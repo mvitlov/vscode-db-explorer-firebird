@@ -248,7 +248,7 @@ const dataTypes = id => {
     },
     {
       value: "Fake Company Name",
-      data: { category: "Commerce", shortDesc: number, longDesc: "Random company name", options: false }
+      data: { category: "Commerce", shortDesc: string, longDesc: "Random company name", options: false }
     },
     {
       value: "IBAN",
