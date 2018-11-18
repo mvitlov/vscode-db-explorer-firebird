@@ -48,6 +48,11 @@
   "contributes": {
     "commands": [
       {
+        "command": "firebird.mockData",
+        "title": "Generate Mock Data",
+        "category": "Firebird"
+      },
+      {
         "command": "firebird.explorer.addConnection",
         "title": "Add New Connection",
         "category": "Firebird",
@@ -206,14 +211,19 @@
           "group": "second@0"
         },
         {
-          "command": "firebird.showTableInfo",
+          "command": "firebird.mockData",
           "when": "view == firebird-explorer && viewItem == table",
           "group": "firebird@0"
         },
         {
-          "command": "firebird.selectAllRecords",
+          "command": "firebird.showTableInfo",
           "when": "view == firebird-explorer && viewItem == table",
           "group": "firebird@1"
+        },
+        {
+          "command": "firebird.selectAllRecords",
+          "when": "view == firebird-explorer && viewItem == table",
+          "group": "firebird@2"
         },
         {
           "command": "firebird.table.dropTable",
@@ -231,6 +241,11 @@
       "type": "object",
       "title": "Firebird Explorer",
       "properties": {
+        "firebird.mockarooApiKey": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "To generate mock data, please insert your [Mockaroo API](https://www.mockaroo.com/users/sign_up) key."
+        },
         "firebird.codeCompletion.keywords": {
           "type": "boolean",
           "default": true,

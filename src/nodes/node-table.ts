@@ -1,12 +1,12 @@
-import { TreeItem, TreeItemCollapsibleState, commands } from "vscode";
+import { TreeItem, TreeItemCollapsibleState, commands, Uri } from "vscode";
 import { join } from "path";
 import { NodeField, NodeInfo } from ".";
-import { ConnectionOptions, FirebirdTree } from "../interfaces";
+import { ConnectionOptions, FirebirdTree, Options } from "../interfaces";
 import { selectAllRecordsQuery, tableInfoQuery, dropTableQuery } from "../shared/queries";
 import { Global } from "../shared/global";
 import { Utility } from "../shared/utility";
-
 import { logger } from "../logger/logger";
+import MockData from "../mock-data/mock-data";
 
 export class NodeTable implements FirebirdTree {
   constructor(private readonly dbDetails: ConnectionOptions, private readonly table: string) {}
@@ -93,5 +93,36 @@ export class NodeTable implements FirebirdTree {
       .catch(err => {
         logger.error(err);
       });
+  }
+
+  public async generateMockData(firebirdMockData: MockData, config: Options) {
+    let fields = [];
+    let apiKey = config.mockarooApiKey;
+
+    if (!apiKey) {
+      logger.error(
+        "No Mockaroo Api key detected!\nTo generate your API key, create an account at https://www.mockaroo.com/ and insert your API key in extension settings."
+      );
+      await logger
+        .showError("No Mockaroo API key in settings! Unable to generate mock data.", ["Cancel", "Get API key"])
+        .then(selected => {
+          if (selected === "Get API key") {
+            commands.executeCommand("vscode.open", Uri.parse("https://www.mockaroo.com/users/sign_up"));
+          }
+        });
+      return;
+    }
+
+    await this.getChildren().then(children => {
+      children.filter(data => {
+        fields.push({
+          name: data.field.FIELD_NAME.trim(),
+          type: data.field.FIELD_TYPE.trim() + " (" + data.field.FIELD_LENGTH + ")",
+          notnull: data.field.NOT_NULL
+        });
+      });
+    });
+
+    firebirdMockData.display(this.table, fields, apiKey);
   }
 }

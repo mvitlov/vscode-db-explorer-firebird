@@ -10,10 +10,8 @@ $(document).ready(() => {
     let data = event.data.data;
     if (data.tableBody.length) {
       $("#zero-results").hide();
-      $(".loading-container").hide();
       showData(data);
     } else {
-      $(".loading-container").hide();
       $("#zero-results").show();
       $("body").addClass("loaded");
     }

@@ -23,7 +23,7 @@ export default class ResultView extends QueryResultsView implements Disposable {
      * DEV: "src",...
      * PROD: "out",...
      */
-    this.show(join(this.extensionPath, "out", "result-view", "htmlContent", "index.html"));
+    this.show(join(this.extensionPath, "src", "result-view", "htmlContent", "index.html"));
   }
 
   handleMessage(message: Message): void {

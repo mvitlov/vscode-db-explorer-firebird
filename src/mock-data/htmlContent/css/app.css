@@ -1,0 +1,89 @@
+body input,
+select {
+  color: var(--vscode-editor-foreground) !important;
+  margin: 0;
+}
+
+select optgroup {
+  background-color: var(--vscode-button-background) !important;
+}
+
+/* disable number input stepper */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* icon */
+div.img-wrapper {
+  position: fixed;
+  bottom: 2%;
+  right: 1%;
+  z-index: 11000;
+  opacity: 0.1;
+}
+div.img-wrapper img {
+  width: 100px;
+}
+
+/* #region TOOLTIP STYLING*/
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted var(--vscode-button-foreground) !important;
+}
+
+.tooltip .tooltiptext {
+  font-weight: normal;
+  visibility: hidden;
+  width: 120px;
+  background-color: var(--vscode-button-background) !important;
+  color: var(--vscode-button-foreground) !important;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+/* #endregion TOOLTIP STYLING*/
+
+/* #region AUTOCOMPLETE STYLING*/
+.autocomplete-suggestions {
+  border: 1px solid var(--vscode-editor-foreground) !important;
+  border-radius: 4px;
+  background: var(--vscode-editor-background) !important;
+  cursor: default;
+  overflow: auto;
+}
+.autocomplete-group,
+.autocomplete-no-suggestion {
+  padding: 4px 4px;
+  background: var(--vscode-button-background) !important;
+  color: var(--vscode-button-foreground) !important;
+}
+.autocomplete-suggestion {
+  padding: 4px 4px;
+  font-size: 1.2em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.autocomplete-selected {
+  background: var(--vscode-editor-selectionBackground) !important;
+}
+.autocomplete-suggestions strong {
+  color: var(--vscode-editorCursor-foreground) !important;
+}
+
+option {
+  background: var(--vscode-editor-background) !important;
+}
+/* #endregion */

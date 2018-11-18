@@ -196,11 +196,11 @@ body.vscode-high-contrast tr {
 }
 
 body.vscode-high-contrast table.dataTable thead .sorting_asc {
-  background-image: url(sort_asc_light.png);
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23ECF0F1;%7D %3C/style%3E%3Cpath class='st0' d='M89.7,49.6L67.2,26.1c-1.8-1.9-4.6-1.9-6.4,0L38.3,49.6c-2.8,3-0.8,8.1,3.2,8.1h44.9 C90.5,57.7,92.5,52.6,89.7,49.6z'/%3E%3C/svg%3E%0A");
 }
 body.vscode-high-contrast table.dataTable thead .sorting_desc {
-  background-image: url(sort_desc_light.png);
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23ECF0F1;%7D %3C/style%3E%3Cpath class='st0' d='M41.5,70.3h44.9c4,0,6.1,5.1,3.2,8.1l-22.5,23.5c-1.8,1.9-4.6,1.9-6.4,0L38.3,78.4 C35.5,75.4,37.5,70.3,41.5,70.3z'/%3E%3C/svg%3E%0A");
 }
 body.vscode-high-contrast table.dataTable thead .sorting {
-  background-image: url(sort_both_light.png);
+  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%237F8C8D;%7D %3C/style%3E%3Cpath class='st0' d='M41.5,70.3h44.9c4,0,6.1,5.1,3.2,8.1l-22.5,23.5c-1.8,1.9-4.6,1.9-6.4,0L38.3,78.4 C35.5,75.4,37.5,70.3,41.5,70.3z M89.7,49.6L67.2,26.1c-1.8-1.9-4.6-1.9-6.4,0L38.3,49.6c-2.8,3-0.8,8.1,3.2,8.1h44.9 C90.5,57.7,92.5,52.6,89.7,49.6z'/%3E%3C/svg%3E%0A");
 }

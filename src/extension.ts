@@ -9,6 +9,7 @@ import { Global } from "./shared/global";
 import { logger } from "./logger/logger";
 import { KeywordsDb } from "./language-server/db-words.provider";
 import QueryResultsView from "./result-view";
+import MockData from "./mock-data/mock-data";
 import LanguageServer from "./language-server";
 
 export function activate(context: ExtensionContext) {
@@ -26,13 +27,15 @@ export function activate(context: ExtensionContext) {
   );
 
   /* initialize providers */
-  let firebirdLanguageServer = new LanguageServer();
+  const firebirdLanguageServer = new LanguageServer();
   const firebirdDatabaseWords = new KeywordsDb();
   const firebirdTreeDataProvider = new FirebirdTreeDataProvider(context);
+  const firebirdMockData = new MockData(context.extensionPath);
   const firebirdQueryResults = new QueryResultsView(context.extensionPath);
 
   context.subscriptions.push(
     window.registerTreeDataProvider(Constants.FirebirdExplorerViewId, firebirdTreeDataProvider),
+    firebirdMockData,
     firebirdQueryResults,
     firebirdLanguageServer
   );
@@ -40,6 +43,15 @@ export function activate(context: ExtensionContext) {
   firebirdLanguageServer.setSchemaHandler(doc => {
     return firebirdDatabaseWords.getSchema();
   });
+
+  // firebirdMockData.display([], "10");
+
+  /* GENERATE MOCK DATA */
+  context.subscriptions.push(
+    commands.registerCommand("firebird.mockData", (tableNode: NodeTable) => {
+      tableNode.generateMockData(firebirdMockData, config);
+    })
+  );
 
   /* EXPLORER TOOLBAR: add new host/database connection */
   context.subscriptions.push(
