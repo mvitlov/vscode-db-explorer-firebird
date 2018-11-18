@@ -110,6 +110,8 @@ export class Utility {
     const string = sql.toLowerCase();
     if (string.indexOf("create") > -1) {
       return "Create";
+    } else if (string.indexOf("insert") > -1) {
+      return "Insert";
     } else if (string.indexOf("alter") > -1) {
       return "Alter";
     } else if (string.indexOf("drop") > -1) {
