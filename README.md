@@ -24,8 +24,9 @@ This extension allows you to connect directly to your [Firebird&reg; databases](
 
 ![banner](https://github.com/mvitlov/vscode-db-explorer-firebird/blob/master/images/banner.jpg?raw=true)
 
-## Supported features
+## Features
 
+- **NEW!** [SQL Mock Data Generator](https://github.com/mvitlov/vscode-db-explorer-firebird/wiki/SQL-Mock-Data-Generator)
 - Manage multiple database connections
 - List hosts, databases, tables and fields inside **Explorer View**
 - [Firebird Reserved Words](https://firebirdsql.org/refdocs/langrefupd25-reskeywords-full-reswords.html) **Code Completion**
@@ -72,13 +73,17 @@ The results will be displayed in new tab.
 > **Important**: Multiple queries are currently **not supported**.
 > If you have multiple queries written in your SQL document, make the selection around the one you want to run, otherwise you'll get an error.
 
+### SQL Mock Data Generator
+See [here](https://github.com/mvitlov/vscode-db-explorer-firebird/wiki/SQL-Mock-Data-Generator) for more details.
+
 ## Settings
 
 - `firebird.codeCompletion.keywords: <boolean>` | Enable Code Completion for Firebird Reserved Words (Default **true**)
 - `firebird.codeCompletion.database: <boolean>` | Enable Code Completion for Table and Field names (Default **true**)
-- `firebird.logLevel: <string>` | Logging level to display in the output channel. (Default **INFO**)
-- `firebird.maxTablesCount: <number>` | The max table count shown in the tree view. 0 - show all tables. (Default **10**)
+- `firebird.logLevel: <string>` | Logging level displayed in output channel. (Default **INFO**)
+- `firebird.maxTablesCount: <number>` | Number of tables visible in database tree. (Default **10**)
 - `firebird.recordsPerPage: <string>` | Number of records to display per page. (Default **10**)
+- `firebird.mockarooApiKey <string>` | API key for Mock Data Generator (Default **blank**)
 
 ## Disclaimer
 
