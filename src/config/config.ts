@@ -6,6 +6,7 @@ const properties = require("../../package.json").contributes.configuration.prope
 
 export function getOptions() {
   return {
+    mockarooApiKey: _mockarooApiKey(),
     maxTablesCount: _maxTablesCount(),
     codeCompletionKeywords: _codeCompletionKeywords(),
     codeCompletionDatabase: _codeCompletionDatabase(),
@@ -16,6 +17,17 @@ export function getOptions() {
 
 function getConfig(): WorkspaceConfiguration {
   return workspace.getConfiguration("firebird");
+}
+
+function _mockarooApiKey(): string {
+  const apiKeyConf: any = getConfig().get("mockarooApiKey");
+  // const apiKey: string = properties["firebird.mockarooApiKey"]["default"];
+
+  if (apiKeyConf === "") {
+    return;
+  } else {
+    return apiKeyConf;
+  }
 }
 
 function _maxTablesCount(): number {
