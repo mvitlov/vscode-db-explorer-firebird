@@ -6,7 +6,7 @@ All notable changes to the "vscode-db-explorer-firebird" extension will be docum
 
 ### Added
 
-- SQL mock data generator
+- [SQL Mock Data Generator](https://github.com/mvitlov/vscode-db-explorer-firebird/wiki/SQL-Mock-Data-Generator)
 
 ## 0.0.1 - 2018-11-14
 
