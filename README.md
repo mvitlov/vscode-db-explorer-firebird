@@ -10,10 +10,10 @@
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=marinv.vscode-db-explorer-firebird">
-    <img src="http://vsmarketplacebadge.apphb.com/version/marinv.vscode-db-explorer-firebird.svg" alt="badge-version">
+    <img src="https://vsmarketplacebadge.apphb.com/version/marinv.vscode-db-explorer-firebird.svg" alt="badge-version">
   </a>
   <a href="https://marketplace.visualstudio.com/items?itemName=marinv.vscode-db-explorer-firebird">
-    <img src="http://vsmarketplacebadge.apphb.com/installs/marinv.vscode-db-explorer-firebird.svg" alt="badge-installs">
+    <img src="https://vsmarketplacebadge.apphb.com/installs/marinv.vscode-db-explorer-firebird.svg" alt="badge-installs">
   </a>
   <!-- <a href="https://">
     <img src="https://" alt="badge3">
@@ -74,6 +74,7 @@ The results will be displayed in new tab.
 > If you have multiple queries written in your SQL document, make the selection around the one you want to run, otherwise you'll get an error.
 
 ### SQL Mock Data Generator
+
 See [here](https://github.com/mvitlov/vscode-db-explorer-firebird/wiki/SQL-Mock-Data-Generator) for more details.
 
 ## Settings
