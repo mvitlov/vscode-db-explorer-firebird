@@ -17,7 +17,7 @@ export async function connectionWizard() {
     options.host = await input.showInputBox({
       title,
       step: 1,
-      totalSteps: 5,
+      totalSteps: 6,
       prompt: "[REQUIRED] The hostname of the database.",
       placeHolder: "e.g. 'localhost'",
       ignoreFocusOut: true
@@ -33,7 +33,7 @@ export async function connectionWizard() {
     options.database = await input.showInputBox({
       title,
       step: 2,
-      totalSteps: 5,
+      totalSteps: 6,
       prompt: "[REQUIRED] Absolute path to Firebird database.",
       placeHolder: "e.g. '/DB/pathtoyour/database.fdb'",
       ignoreFocusOut: true
@@ -49,7 +49,7 @@ export async function connectionWizard() {
     options.port = await input.showInputBox({
       title,
       step: 3,
-      totalSteps: 5,
+      totalSteps: 6,
       prompt: "[OPTIONAL] Port number. Leave empty for default.",
       placeHolder: "defaults to 3050",
       ignoreFocusOut: true
@@ -65,7 +65,7 @@ export async function connectionWizard() {
     options.user = await input.showInputBox({
       title,
       step: 4,
-      totalSteps: 5,
+      totalSteps: 6,
       prompt: "[OPTIONAL] Firebird user to authenticate as. Leave empty for default.",
       placeHolder: "defaults to SYSDBA",
       ignoreFocusOut: true
@@ -81,7 +81,7 @@ export async function connectionWizard() {
     options.password = await input.showInputBox({
       title,
       step: 5,
-      totalSteps: 5,
+      totalSteps: 6,
       prompt: "[OPTIONAL] The password of the Firebird user. Leave empty for default.",
       placeHolder: "defaults to masterkey",
       ignoreFocusOut: true,
@@ -91,6 +91,23 @@ export async function connectionWizard() {
     if (!options.password) {
       logger.info("Default password masterkey selected.");
       options.password = "masterkey";
+    }
+    return (input: MultiStepInput) => role(input, options);
+  }
+
+  async function role(input: MultiStepInput, options: Partial<ConnectionOptions>) {
+    options.role = await input.showInputBox({
+      title,
+      step: 6,
+      totalSteps: 6,
+      prompt: "[OPTIONAL] User Role. Leave empty for default.",
+      placeHolder: "Defaults to null",
+      ignoreFocusOut: true
+    });
+
+    if (!options.role) {
+      logger.info("Default user role selected.");
+      options.role = null;
     }
   }
 

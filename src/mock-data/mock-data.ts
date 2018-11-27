@@ -34,7 +34,7 @@ export default class MockData implements Disposable {
      * DEV: => "src",...
      * PROD: => "out",...
      */
-    this.show(join(this.extensionPath, "src", "mock-data", "htmlContent", "index.html"));
+    this.show(join(this.extensionPath, "out", "mock-data", "htmlContent", "index.html"));
   }
 
   show(htmlPath: string) {

@@ -10,4 +10,5 @@ export interface ConnectionOptions {
   database: string;
   user: string;
   password: string;
+  role: string | null;
 }
