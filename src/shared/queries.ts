@@ -6,11 +6,10 @@ export function getTablesQuery(maxTableCount: number): string {
                AND RDB$RELATION_TYPE = 0 
           ORDER BY 1;`;
   } else {
-    return `SELECT RDB$RELATION_NAME TABLE_NAME
-              FROM RDB$RELATIONS
-             WHERE RDB$SYSTEM_FLAG = 0 
-               AND RDB$RELATION_TYPE = 0 
-          ORDER BY 1;`;
+    return `select rdb$relation_name 
+    from rdb$relations
+    where rdb$view_blr is null 
+      and (rdb$system_flag is null or rdb$system_flag = 0)`;
   }
 }
 
