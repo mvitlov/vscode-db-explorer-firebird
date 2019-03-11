@@ -138,7 +138,7 @@ export function activate(context: ExtensionContext) {
     commands.registerCommand("firebird.runQuery", () => {
       Utility.runQuery()
         .then(res => {
-          if ("message" in res[0]) {
+          if (res[0] && "message" in res[0]) {
             logger.info(res[0].message);
             logger.showInfo(res[0].message);
             commands.executeCommand("firebird.explorer.refresh");

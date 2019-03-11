@@ -2,6 +2,11 @@
 
 All notable changes to the "vscode-db-explorer-firebird" extension will be documented in this file.
 
+## 0.0.4 - 2019-03-11
+
+### Fixed
+ - SELECT bug after previous DELETE
+
 ## 0.0.3 - 2018-11-27
 
 ### Added

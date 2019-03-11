@@ -116,6 +116,8 @@ export class Utility {
       return "Alter";
     } else if (string.indexOf("drop") > -1) {
       return "Drop";
+    } else if (string.indexOf("delete") > -1) {
+      return "Delete";
     }
   }
 
