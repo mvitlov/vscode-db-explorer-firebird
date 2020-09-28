@@ -1,29 +1,8 @@
 {
   "name": "vscode-db-explorer-firebird",
   "displayName": "DB Explorer For Firebird Databases",
-  "description": "A tool for exploring and querying Firebird Databases directly inside VS Code.",
   "version": "0.0.4",
-  "author": {
-    "name": "Marin Vitlov",
-    "url": "https://github.com/mvitlov"
-  },
-  "publisher": "marinv",
-  "icon": "resources/img/icon.png",
-  "galleryBanner": {
-    "color": "#f1c40f",
-    "theme": "light"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mvitlov/vscode-db-explorer-firebird"
-  },
-  "bugs": {
-    "url": "https://github.com/mvitlov/vscode-db-explorer-firebird/issues"
-  },
-  "engines": {
-    "vscode": "^1.28.0"
-  },
+  "description": "A tool for exploring and querying Firebird Databases directly inside VS Code.",
   "categories": [
     "Programming Languages",
     "Other"
@@ -37,14 +16,25 @@
     "GDB",
     "SQL"
   ],
-  "activationEvents": [
-    "onLanguage:sql",
-    "onView:firebird-explorer",
-    "onCommand:firebird.explorer.addConnection",
-    "onCommand:firebird.newQuery",
-    "onCommand:firebird.runQuery"
-  ],
+  "bugs": {
+    "url": "https://github.com/mvitlov/vscode-db-explorer-firebird/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mvitlov/vscode-db-explorer-firebird"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Marin Vitlov",
+    "url": "https://github.com/mvitlov"
+  },
+  "publisher": "marinv",
   "main": "./out/extension",
+  "scripts": {
+    "compile": "tsc -p ./",
+    "vscode:prepublish": "npm run compile",
+    "watch": "tsc -watch -p ./"
+  },
   "contributes": {
     "commands": [
       {
@@ -135,22 +125,54 @@
         "category": "Firebird"
       }
     ],
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "firebird-tree",
-          "title": "Firebird",
-          "icon": "resources/firebird-explorer-icon.svg"
+    "configuration": {
+      "type": "object",
+      "title": "Firebird Explorer",
+      "properties": {
+        "firebird.mockarooApiKey": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "To generate mock data, please insert your [Mockaroo API](https://www.mockaroo.com/users/sign_up) key."
+        },
+        "firebird.codeCompletion.keywords": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable code completion for Firebird-specific keywords."
+        },
+        "firebird.codeCompletion.database": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable code completion for Firebird Database table and field names."
+        },
+        "firebird.logLevel": {
+          "type": "string",
+          "enum": [
+            "DEBUG",
+            "INFO",
+            "WARN",
+            "ERROR"
+          ],
+          "default": "INFO",
+          "description": "Logging level in the output channel."
+        },
+        "firebird.maxTablesCount": {
+          "type": "integer",
+          "default": 10,
+          "description": "The maximum table count shown in the tree view. Use 0 to show all tables."
+        },
+        "firebird.recordsPerPage": {
+          "type": "string",
+          "enum": [
+            "10",
+            "25",
+            "50",
+            "100",
+            "All records"
+          ],
+          "default": "10",
+          "description": "Number of records per page to show in results view."
         }
-      ]
-    },
-    "views": {
-      "firebird-tree": [
-        {
-          "id": "firebird-explorer",
-          "name": "DB Explorer"
-        }
-      ]
+      }
     },
     "keybindings": [
       {
@@ -237,72 +259,48 @@
         }
       ]
     },
-    "configuration": {
-      "type": "object",
-      "title": "Firebird Explorer",
-      "properties": {
-        "firebird.mockarooApiKey": {
-          "type": "string",
-          "default": "",
-          "markdownDescription": "To generate mock data, please insert your [Mockaroo API](https://www.mockaroo.com/users/sign_up) key."
-        },
-        "firebird.codeCompletion.keywords": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enable code completion for Firebird-specific keywords."
-        },
-        "firebird.codeCompletion.database": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enable code completion for Firebird Database table and field names."
-        },
-        "firebird.logLevel": {
-          "type": "string",
-          "enum": [
-            "DEBUG",
-            "INFO",
-            "WARN",
-            "ERROR"
-          ],
-          "default": "INFO",
-          "description": "Logging level in the output channel."
-        },
-        "firebird.maxTablesCount": {
-          "type": "integer",
-          "default": 10,
-          "description": "The maximum table count shown in the tree view. Use 0 to show all tables."
-        },
-        "firebird.recordsPerPage": {
-          "type": "string",
-          "enum": [
-            "10",
-            "25",
-            "50",
-            "100",
-            "All records"
-          ],
-          "default": "10",
-          "description": "Number of records per page to show in results view."
+    "views": {
+      "firebird-tree": [
+        {
+          "id": "firebird-explorer",
+          "name": "DB Explorer"
         }
-      }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "firebird-tree",
+          "title": "Firebird",
+          "icon": "resources/firebird-explorer-icon.svg"
+        }
+      ]
     }
   },
-  "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  "activationEvents": [
+    "onLanguage:sql",
+    "onView:firebird-explorer",
+    "onCommand:firebird.explorer.addConnection",
+    "onCommand:firebird.newQuery",
+    "onCommand:firebird.runQuery"
+  ],
+  "dependencies": {
+    "node-firebird": "^0.9.8",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
-    "typescript": "^2.6.1",
-    "vscode": "^1.1.21",
-    "tslint": "^5.8.0",
-    "@types/node": "^8.10.25",
-    "@types/mocha": "^2.2.42"
+    "@types/node": "^14.11.2",
+    "@types/uuid": "^8.3.0",
+    "@types/vscode": "^1.32.0",
+    "tslint": "^6.1.3",
+    "typescript": "^4.0.3"
   },
-  "dependencies": {
-    "node-firebird": "^0.8.6",
-    "uuid": "^3.1.0"
+  "engines": {
+    "vscode": "^1.32.0"
+  },
+  "icon": "resources/img/icon.png",
+  "galleryBanner": {
+    "color": "#f1c40f",
+    "theme": "light"
   }
 }
