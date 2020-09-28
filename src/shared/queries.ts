@@ -2,14 +2,14 @@ export function getTablesQuery(maxTableCount: number): string {
   if (maxTableCount !== 0) {
     return `SELECT FIRST ${Math.abs(maxTableCount)} RDB$RELATION_NAME TABLE_NAME
               FROM RDB$RELATIONS
-             WHERE RDB$SYSTEM_FLAG = 0 
-               AND RDB$RELATION_TYPE = 0 
+             WHERE RDB$VIEW_BLR IS NULL
+               AND (RDB$SYSTEM_FLAG IS NULL OR RDB$SYSTEM_FLAG = 0)
           ORDER BY 1;`;
   } else {
     return `SELECT RDB$RELATION_NAME TABLE_NAME
               FROM RDB$RELATIONS
-             WHERE RDB$SYSTEM_FLAG = 0 
-               AND RDB$RELATION_TYPE = 0 
+             WHERE RDB$VIEW_BLR IS NULL
+               AND (RDB$SYSTEM_FLAG IS NULL OR RDB$SYSTEM_FLAG = 0)
           ORDER BY 1;`;
   }
 }
