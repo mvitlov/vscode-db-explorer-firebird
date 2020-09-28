@@ -8,9 +8,14 @@
   },
   // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
   "typescript.tsc.autoDetect": "off",
-  "prettier.printWidth": 120,
+  "prettier.printWidth": 160,
+  "prettier.singleQuote": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "workbench.colorTheme": "One Dark Pro",
   "workbench.editor.enablePreview": false,
-  "workbench.editor.enablePreviewFromQuickOpen": false
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "liveServer.settings.CustomBrowser": "chrome",
+  "liveServer.settings.host": "localhost",
+  "liveServer.settings.mount": [],
+  "liveServer.settings.root": "./src/mock-data/htmlContent"
 }
