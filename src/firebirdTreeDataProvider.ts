@@ -1,5 +1,5 @@
 import { TreeDataProvider, EventEmitter, Event, ExtensionContext, TreeItem } from "vscode";
-import * as uuidv1 from "uuid/v1";
+import { v1 as uuidv1} from 'uuid';
 import { NodeHost } from "./nodes";
 import { ConnectionOptions, FirebirdTree } from "./interfaces";
 import { connectionWizard } from "./shared/connection-wizard";
