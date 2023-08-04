@@ -32,7 +32,8 @@
   "main": "./out/extension",
   "scripts": {
     "compile": "tsc -p ./",
-    "vscode:prepublish": "npm run compile",
+    "copy-files": "copyfiles -u 1 \"src/result-view/htmlContent/**/*\" out",
+    "vscode:prepublish": "npm run compile && npm run copy-files",
     "watch": "tsc -watch -p ./"
   },
   "contributes": {
@@ -285,8 +286,10 @@
     "onCommand:firebird.runQuery"
   ],
   "dependencies": {
+    "copyfiles": "^2.4.1",
     "node-firebird": "^0.9.8",
-    "uuid": "^8.3.0"
+    "uuid": "^8.3.0",
+    "vscode-uri": "^3.0.7"
   },
   "devDependencies": {
     "@types/node": "^14.11.2",
