@@ -17,10 +17,7 @@ export class NodeTable implements FirebirdTree {
       collapsibleState: TreeItemCollapsibleState.Collapsed,
       contextValue: "table",
       tooltip: `[TABLE] ${this.table}`,
-      iconPath: {
-        dark: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "dark", "table-dark.svg")),
-        light: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "light", "table-light.svg"))
-      }
+      iconPath: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "tables.svg"))
     };
   }
 

@@ -1,39 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="13.969" viewBox="0 0 16 13.969">
-  <metadata><?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
-<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.6-c142 79.160924, 2017/07/13-01:06:39        ">
-   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-      <rdf:Description rdf:about=""/>
-   </rdf:RDF>
-</x:xmpmeta>
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                                                                                                    
-                           
-<?xpacket end="w"?></metadata>
-<defs>
-    <style>
-      .cls-1 {
-        fill: #f1c40f;
-        fill-rule: evenodd;
-      }
-    </style>
-  </defs>
-  <path id="host-dark" class="cls-1" d="M15.022,5.016H1a1,1,0,0,1-1-1v-2a1,1,0,0,1,1-1h14.02a1,1,0,0,1,1,1v2A1,1,0,0,1,15.022,5.016ZM13.52,2.27a0.749,0.749,0,1,0,.751.749A0.75,0.75,0,0,0,13.52,2.27Zm-2,0a0.749,0.749,0,1,0,.751.749A0.75,0.75,0,0,0,11.517,2.27Zm3.5,7.739H1a1,1,0,0,1-1-1v-2a1,1,0,0,1,1-1h14.02a1,1,0,0,1,1,1v2A1,1,0,0,1,15.022,10.009Zm-1.5-2.746a0.749,0.749,0,1,0,.751.749A0.75,0.75,0,0,0,13.52,7.263Zm-2,0a0.749,0.749,0,1,0,.751.749A0.75,0.75,0,0,0,11.517,7.263ZM15.022,15H1a1,1,0,0,1-1-1v-2a1,1,0,0,1,1-1h14.02a1,1,0,0,1,1,1v2A1,1,0,0,1,15.022,15Zm-1.5-2.746a0.749,0.749,0,1,0,.751.749A0.75,0.75,0,0,0,13.52,12.256Zm-2,0a0.749,0.749,0,1,0,.751.749A0.75,0.75,0,0,0,11.517,12.256Z" transform="translate(0 -1.031)"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 16 16">
+	<g fill="none">
+		<path fill="url(#SVGj8ngWcNx)" d="M3.5 12.5h9.313s-.313.5-.313 1s.313 1 .313 1H5A1.5 1.5 0 0 1 3.5 13z" />
+		<path fill="url(#SVGbfbaudPF)" d="M11 1H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7.5a.5.5 0 0 0 0-1H5a1 1 0 0 1-1-1v-.003h8.5a.5.5 0 0 0 .5-.5V3a2 2 0 0 0-2-2" />
+		<path fill="url(#SVGP566Dcmy)" d="M6 3a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1z" />
+		<path fill="url(#SVGL2pDEeas)" fill-opacity="0.3" d="M11 1H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7.5a.5.5 0 0 0 .5-.5V3a2 2 0 0 0-2-2" />
+		<path fill="url(#SVGBcfaFeDc)" fill-opacity="0.3" d="M11 1H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7.5a.5.5 0 0 0 .5-.5V3a2 2 0 0 0-2-2" />
+		<path fill="url(#SVGbQWa8c1q)" d="M15.168 9.142c-.99.55-2.288.858-3.668.858s-2.679-.309-3.668-.858A4.6 4.6 0 0 1 7 8.554v4.945C7 14.88 9.015 16 11.5 16s4.5-1.12 4.5-2.5l.001-4.946a4.5 4.5 0 0 1-.833.589" />
+		<path fill="url(#SVGmkcCcboc)" d="M14 6.42a6.5 6.5 0 0 0-1.12-.3A8 8 0 0 0 11.5 6C9.015 6 7 7.12 7 8.5S9.015 11 11.5 11S16 9.88 16 8.5c0-.867-.794-1.63-2-2.08" />
+		<defs>
+			<linearGradient id="SVGj8ngWcNx" x1="9.5" x2="9.5" y1="14" y2="12" gradientUnits="userSpaceOnUse">
+				<stop stop-color="#9deaff" />
+				<stop offset=".716" stop-color="#58aafe" />
+			</linearGradient>
+			<linearGradient id="SVGbfbaudPF" x1="6.45" x2="18.146" y1="3.619" y2="17.134" gradientUnits="userSpaceOnUse">
+				<stop stop-color="#20ac9d" />
+				<stop offset="1" stop-color="#2052cb" />
+			</linearGradient>
+			<linearGradient id="SVGP566Dcmy" x1="7.069" x2="9.5" y1="2.485" y2="8.125" gradientUnits="userSpaceOnUse">
+				<stop stop-color="#9ff0f9" />
+				<stop offset="1" stop-color="#6ce0ff" />
+			</linearGradient>
+			<linearGradient id="SVGbQWa8c1q" x1="9.125" x2="14.375" y1="6.875" y2="15.188" gradientUnits="userSpaceOnUse">
+				<stop stop-color="#3bd5ff" />
+				<stop offset="1" stop-color="#4894fe" />
+			</linearGradient>
+			<linearGradient id="SVGmkcCcboc" x1="14.5" x2="9" y1="11.5" y2="6" gradientUnits="userSpaceOnUse">
+				<stop stop-color="#66c0ff" />
+				<stop offset="1" stop-color="#c8f3ff" />
+			</linearGradient>
+			<radialGradient id="SVGL2pDEeas" cx="0" cy="0" r="1" gradientTransform="matrix(-2 1.5 -1.71645 -2.2886 9 14)" gradientUnits="userSpaceOnUse">
+				<stop stop-color="#4a43cb" />
+				<stop offset="1" stop-color="#4a43cb" stop-opacity="0" />
+			</radialGradient>
+			<radialGradient id="SVGBcfaFeDc" cx="0" cy="0" r="1" gradientTransform="matrix(0 -5.5 2.83733 0 8 13.5)" gradientUnits="userSpaceOnUse">
+				<stop stop-color="#171155" />
+				<stop offset=".328" stop-color="#171155" />
+				<stop offset="1" stop-color="#4a43cb" stop-opacity="0" />
+			</radialGradient>
+		</defs>
+	</g>
 </svg>
