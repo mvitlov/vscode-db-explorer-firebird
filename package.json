@@ -49,8 +49,8 @@
         "title": "Add New Connection",
         "category": "Firebird",
         "icon": {
-          "light": "resources/icons/light/add-connection.svg",
-          "dark": "resources/icons/dark/add-connection.svg"
+          "light": "resources/icons/add-connection.svg",
+          "dark": "resources/icons/add-connection.svg"
         }
       },
       {
@@ -58,8 +58,8 @@
         "title": "New Sql Query",
         "category": "Firebird",
         "icon": {
-          "light": "resources/icons/light/new-sql.svg",
-          "dark": "resources/icons/dark/new-sql.svg"
+          "light": "resources/icons/new-sql.svg",
+          "dark": "resources/icons/new-sql.svg"
         }
       },
       {
@@ -67,8 +67,8 @@
         "title": "Refresh",
         "category": "Firebird",
         "icon": {
-          "light": "resources/icons/light/refresh.svg",
-          "dark": "resources/icons/dark/refresh.svg"
+          "light": "resources/icons/refresh.svg",
+          "dark": "resources/icons/refresh.svg"
         }
       },
       {

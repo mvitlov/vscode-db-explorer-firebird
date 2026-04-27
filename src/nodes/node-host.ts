@@ -16,8 +16,8 @@ export class NodeHost implements FirebirdTree {
       contextValue: "host",
       tooltip: `[HOST] ${this.host}`,
       iconPath: {
-        dark: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "dark", "host-dark.svg")),
-        light: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "light", "host-light.svg"))
+        dark: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "host.svg")),
+        light: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "host.svg"))
       }
     };
   }

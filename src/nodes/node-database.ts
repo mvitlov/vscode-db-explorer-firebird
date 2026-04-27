@@ -24,8 +24,8 @@ export class NodeDatabase implements FirebirdTree {
       contextValue: "database",
       tooltip: `[DATABASE] ${this.dbDetails.database}`,
       iconPath: {
-        dark: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "dark", "db-dark.svg")),
-        light: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "light", "db-light.svg"))
+        dark: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "db.svg")),
+        light: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "db.svg"))
       }
     };
   }
