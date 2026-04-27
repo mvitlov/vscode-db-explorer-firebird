@@ -143,7 +143,7 @@ export function activate(context: ExtensionContext) {
             logger.showInfo(res[0].message);
             commands.executeCommand("firebird.explorer.refresh");
           } else {
-            firebirdQueryResults.display(res, config.recordsPerPage);
+            firebirdQueryResults.display(res, config.recordsPerPage, Utility.getLastQueryMetrics());
           }
         })
         .catch(error => {
@@ -179,7 +179,7 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(
     commands.registerCommand("firebird.showDatabaseInfo", (databaseNode: NodeDatabase) => {
       databaseNode.showDatabaseInfo().then(result => {
-        firebirdQueryResults.display(result, config.recordsPerPage);
+        firebirdQueryResults.display(result, config.recordsPerPage, Utility.getLastQueryMetrics());
       });
     })
   );
@@ -190,7 +190,7 @@ export function activate(context: ExtensionContext) {
       tableNode
         .showTableInfo()
         .then(result => {
-          firebirdQueryResults.display(result, config.recordsPerPage);
+          firebirdQueryResults.display(result, config.recordsPerPage, Utility.getLastQueryMetrics());
         })
         .catch(err => {
           logger.error(err);
@@ -212,7 +212,7 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(
     commands.registerCommand("firebird.selectAllRecords", (tableNode: NodeTable) => {
       tableNode.selectAllRecords().then(result => {
-        firebirdQueryResults.display(result, config.recordsPerPage);
+        firebirdQueryResults.display(result, config.recordsPerPage, Utility.getLastQueryMetrics());
       });
     })
   );
@@ -228,7 +228,7 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(
     commands.registerCommand("firebird.selectFieldRecords", (fieldNode: NodeField) => {
       fieldNode.selectAllSingleFieldRecords().then(result => {
-        firebirdQueryResults.display(result, config.recordsPerPage);
+        firebirdQueryResults.display(result, config.recordsPerPage, Utility.getLastQueryMetrics());
       });
     })
   );

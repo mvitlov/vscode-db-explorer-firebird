@@ -3,15 +3,40 @@ div.container {
   margin-bottom: 1rem;
 }
 
-div.img-wrapper {
-  position: fixed;
-  bottom: 2%;
-  right: 1%;
-  z-index: 11000;
-  opacity: 0.1;
+#query-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
 }
-div.img-wrapper img {
-  width: 100px;
+
+.stats-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+  border: 1px solid var(--vscode-panel-border);
+  background: var(--vscode-editorWidget-background);
+  color: var(--vscode-editor-foreground);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.stats-query {
+  max-width: min(100%, 800px);
+}
+
+.stats-label {
+  opacity: 0.75;
+  font-weight: bold;
+}
+
+#stats-sql {
+  font-family: var(--vscode-editor-font-family);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 640px;
 }
 
 /* DARK STYLE TABLE */

@@ -8,13 +8,20 @@
   </head>
 
   <body>
-    <div class="img-wrapper"><img src="/img/icon.png" /></div>
     <div id="loader-wrapper">
       <div id="loader"></div>
       <div class="loader-section section-left"></div>
       <div class="loader-section section-right"></div>
     </div>
     <div id="content">
+      <div class="container" id="query-stats" style="width:100%">
+        <div class="stats-item"><span class="stats-label">Rows</span><span id="stats-rows">-</span></div>
+        <div class="stats-item"><span class="stats-label">Total</span><span id="stats-total">-</span></div>
+        <div class="stats-item"><span class="stats-label">Connection</span><span id="stats-connect">-</span></div>
+        <div class="stats-item"><span class="stats-label">Fetching</span><span id="stats-fetch">-</span></div>
+        <div class="stats-item"><span class="stats-label">Blob Decode</span><span id="stats-blob">-</span></div>
+        <div class="stats-item stats-query"><span class="stats-label">SQL</span><span id="stats-sql">-</span></div>
+      </div>
       <div class="container" id="zero-results" style="display:none; width:100%"><p>Records found: 0</p></div>
       <div class="container" style="width:100%">
         <table id="example" class="row-border order-column cell-border compact display" style="width:100%;"></table>

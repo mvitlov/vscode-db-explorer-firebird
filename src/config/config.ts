@@ -24,7 +24,7 @@ function _mockarooApiKey(): string {
   // const apiKey: string = properties["firebird.mockarooApiKey"]["default"];
 
   if (apiKeyConf === "") {
-    return;
+    return "";
   } else {
     return apiKeyConf;
   }
@@ -83,12 +83,9 @@ function _recordsPerPage(): string {
   const recordsPerPageConf: any = getConfig().get("recordsPerPage");
   const recordsPerPage: any = properties["firebird.recordsPerPage"]["default"];
 
-  if (typeof recordsPerPageConf === "string") {
-    if (valid.indexOf(recordsPerPageConf) > -1) {
-      return recordsPerPageConf;
-    }
-  } else {
-    logger.error("Invalid value detected in Records Per Page settings. Fallback to default value.");
-    return recordsPerPage;
+  if (typeof recordsPerPageConf === "string" && valid.indexOf(recordsPerPageConf) > -1) {
+    return recordsPerPageConf;
   }
+  logger.error("Invalid value detected in Records Per Page settings. Fallback to default value.");
+  return recordsPerPage;
 }

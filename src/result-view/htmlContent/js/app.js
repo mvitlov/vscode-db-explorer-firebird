@@ -7,7 +7,9 @@ $(document).ready(() => {
   });
 
   window.addEventListener("message", event => {
-    let data = event.data.data;
+    const data = event.data.data;
+    renderExecutionStats(data.execution);
+
     if (data.tableBody.length) {
       $("#zero-results").hide();
       showData(data);
@@ -17,6 +19,37 @@ $(document).ready(() => {
     }
   });
 });
+
+function setStatsValue(id, value) {
+  const element = document.getElementById(id);
+  if (element) {
+    element.textContent = value;
+  }
+}
+
+function formatMilliseconds(value) {
+  return `${value} ms`;
+}
+
+function renderExecutionStats(execution) {
+  if (!execution) {
+    setStatsValue("stats-rows", "-");
+    setStatsValue("stats-total", "-");
+    setStatsValue("stats-connect", "-");
+    setStatsValue("stats-fetch", "-");
+    setStatsValue("stats-blob", "-");
+    setStatsValue("stats-sql", "-");
+    return;
+  }
+
+  setStatsValue("stats-rows", `${execution.rowCount}`);
+  setStatsValue("stats-total", formatMilliseconds(execution.totalMs));
+  setStatsValue("stats-connect", formatMilliseconds(execution.connectMs));
+  setStatsValue("stats-fetch", formatMilliseconds(execution.fetchMs));
+  setStatsValue("stats-blob", formatMilliseconds(execution.blobDecodeMs));
+  setStatsValue("stats-sql", execution.sqlPreview || "-");
+}
+
 function showData(data) {
   $("#example").DataTable({
     scrollX: true,

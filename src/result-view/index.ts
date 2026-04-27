@@ -3,20 +3,23 @@ import { TextDecoder } from "util";
 import { join } from "path";
 
 import { QueryResultsView, Message } from "./queryResultsView";
+import { QueryExecutionMetrics } from "../shared/utility";
 
 type ResultSet = Array<any>;
 
 export default class ResultView extends QueryResultsView implements Disposable {
   private resultSet?: ResultSet;
   private recordsPerPage: string;
+  private executionMetrics?: QueryExecutionMetrics;
 
   constructor(private extensionPath: string) {
     super("resultview", "Firebird Query Results");
   }
 
-  display(resultSet: any, recordsPerPage: string) {
+  display(resultSet: any, recordsPerPage: string, executionMetrics?: QueryExecutionMetrics) {
     this.resultSet = resultSet;
     this.recordsPerPage = recordsPerPage;
+    this.executionMetrics = executionMetrics;
 
     /**
      * Path to HTML files for displaying results in VS Code WebView
@@ -36,7 +39,15 @@ export default class ResultView extends QueryResultsView implements Disposable {
         data: data
       });
     } else {
-      this.send({ command: "message", data: { tableHeader: [], tableBody: [], recordsPerPage: this.recordsPerPage } });
+      this.send({
+        command: "message",
+        data: {
+          tableHeader: [],
+          tableBody: [],
+          recordsPerPage: this.recordsPerPage,
+          execution: this.executionMetrics || null
+        }
+      });
     }
   }
 
@@ -47,7 +58,12 @@ export default class ResultView extends QueryResultsView implements Disposable {
     let tableBody: string[][] = [];
 
     if (!this.resultSet || this.resultSet.length === 0) {
-      return { tableHeader: [], tableBody: [], recordsPerPage: this.recordsPerPage };
+      return {
+        tableHeader: [],
+        tableBody: [],
+        recordsPerPage: this.recordsPerPage,
+        execution: this.executionMetrics || null
+      };
     }
     /* get table header */
     for (const field in this.resultSet[0]) {
@@ -88,6 +104,11 @@ export default class ResultView extends QueryResultsView implements Disposable {
       tableBody.push(temp);
     });
 
-    return { tableHeader: tableHeader, tableBody: tableBody, recordsPerPage: this.recordsPerPage };
+    return {
+      tableHeader: tableHeader,
+      tableBody: tableBody,
+      recordsPerPage: this.recordsPerPage,
+      execution: this.executionMetrics || null
+    };
   }
 }

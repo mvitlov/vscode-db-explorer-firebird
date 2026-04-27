@@ -1,4 +1,4 @@
-import { ExtensionContext, TreeItem, TreeItemCollapsibleState } from "vscode";
+import { ExtensionContext, TreeItem, TreeItemCollapsibleState, Uri } from "vscode";
 import { join } from "path";
 import { NodeTable, NodeInfo } from "./";
 import { ConnectionOptions, FirebirdTree } from "../interfaces";
@@ -24,8 +24,8 @@ export class NodeDatabase implements FirebirdTree {
       contextValue: "database",
       tooltip: `[DATABASE] ${this.dbDetails.database}`,
       iconPath: {
-        dark: join(__filename, "..", "..", "..", "resources", "icons", "dark", "db-dark.svg"),
-        light: join(__filename, "..", "..", "..", "resources", "icons", "light", "db-light.svg")
+        dark: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "dark", "db-dark.svg")),
+        light: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "light", "db-light.svg"))
       }
     };
   }

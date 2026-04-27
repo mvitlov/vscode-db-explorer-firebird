@@ -1,4 +1,4 @@
-import { TreeItem, TreeItemCollapsibleState } from "vscode";
+import { TreeItem, TreeItemCollapsibleState, Uri } from "vscode";
 import { TextDecoder } from "util";
 import { join } from "path";
 import { ConnectionOptions, FirebirdTree } from "../interfaces";
@@ -35,7 +35,7 @@ export class NodeField implements FirebirdTree {
   }
 
   // sets the correct field icon depending on field type and ui theme color
-  private setIcon(constraint: any, notNull: number, tint: string): string {
+  private setIcon(constraint: any, notNull: number, tint: string): Uri {
     const type = this.parseConstraint(constraint);
     if (!type) {
       return notNull ? this.joinPath("notnull", tint) : this.joinPath("null", tint);
@@ -46,7 +46,7 @@ export class NodeField implements FirebirdTree {
     } else if (type.trim() === "UNIQUE") {
       return this.joinPath("unique", tint);
     } else {
-      return "";
+      return this.joinPath("null", tint);
     }
   }
 
@@ -65,14 +65,13 @@ export class NodeField implements FirebirdTree {
   private parseConstraint(constraint: any): string | undefined {
     if (constraint instanceof Buffer) {
       return this.decoder.decode(constraint);
-    } else {
-      return;
     }
+    return undefined;
   }
 
   // construct path to icon
-  private joinPath(type: string, tint: string): string {
-    return join(__filename, "..", "..", "..", "resources", "icons", tint, type + "-" + tint + ".svg");
+  private joinPath(type: string, tint: string): Uri {
+    return Uri.file(join(__filename, "..", "..", "..", "resources", "icons", tint, type + "-" + tint + ".svg"));
   }
 
   //  run predefined sql query

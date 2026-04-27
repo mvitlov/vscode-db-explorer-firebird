@@ -1,6 +1,6 @@
 import { WebviewPanel, window, ViewColumn, Disposable, Uri, WebviewPanelOptions, WebviewOptions } from "vscode";
 import { EventEmitter } from "events";
-import { dirname } from "path";
+import { dirname, join } from "path";
 import { readFile } from "fs";
 import { logger } from "../logger/logger";
 
@@ -11,7 +11,6 @@ export interface Message {
 }
 
 export class QueryResultsView extends EventEmitter implements Disposable {
-  private resourceScheme = "vscode-resource";
   private disposable?: Disposable;
 
   private resourcesPath: string;
@@ -29,8 +28,9 @@ export class QueryResultsView extends EventEmitter implements Disposable {
       this.init();
     }
 
-    this.readWithCache(htmlPath, (html: string) => {
+    this.readFile(htmlPath, (html: string) => {
       if (this.panel) {
+        html = this.replaceUris(html);
         // little hack to make the html unique so that the webview is reloaded
         html = html.replace(/\<\/body\>/, `<div id="${this.randomString(8)}"></div></body>`);
         this.panel.webview.html = html;
@@ -43,8 +43,8 @@ export class QueryResultsView extends EventEmitter implements Disposable {
 
     let options: WebviewPanelOptions & WebviewOptions = {
       enableScripts: true,
-      retainContextWhenHidden: false, // we dont need to keep the state
-      localResourceRoots: [Uri.parse(this.resourcesPath).with({ scheme: "vscode-resource" })]
+      retainContextWhenHidden: false,
+      localResourceRoots: [Uri.file(this.resourcesPath)]
     };
 
     this.panel = window.createWebviewPanel(this.type, this.title, ViewColumn.Two, options);
@@ -62,28 +62,32 @@ export class QueryResultsView extends EventEmitter implements Disposable {
     this.disposable = Disposable.from(...subscriptions);
   }
 
-  private readWithCache(path: string, callback: (html: string) => void) {
-    let html: string = "";
+  private readFile(path: string, callback: (html: string) => void) {
     if (path in this.htmlCache) {
-      html = this.htmlCache[path];
-      callback(html);
+      callback(this.htmlCache[path]);
     } else {
-      readFile(path, "utf8", (err, content) => {
-        html = content || "";
-        html = this.replaceUris(html, path);
+      readFile(path, "utf8", (_err, content) => {
+        const html = content || "";
         this.htmlCache[path] = html;
         callback(html);
       });
     }
   }
 
-  private replaceUris(html: string, htmlPath: string) {
-    let basePath = Uri.parse(dirname(htmlPath))
-      .with({ scheme: this.resourceScheme })
-      .toString();
-    let regex = /(href|src)\=\"(.+?)\"/g;
-    html = html.replace(regex, `$1="${basePath + "$2"}"`);
-    return html;
+  private replaceUris(html: string): string {
+    if (!this.panel) { return html; }
+    const webview = this.panel.webview;
+    // Replace relative src/href with proper webview URIs
+    return html.replace(/(href|src)="([^"]+)"/g, (_match, attr, value) => {
+      // Skip external URLs and data URIs
+      if (value.startsWith("http") || value.startsWith("data:") || value.startsWith("//")) {
+        return `${attr}="${value}"`;
+      }
+      const relativePath = value.replace(/^\/+/, "");
+      const absPath = join(this.resourcesPath, relativePath);
+      const uri = webview.asWebviewUri(Uri.file(absPath));
+      return `${attr}="${uri}"`;
+    });
   }
 
   send(message: Message) {

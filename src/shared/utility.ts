@@ -4,7 +4,20 @@ import { Global } from "./global";
 import { ConnectionOptions } from "../interfaces";
 import { logger } from "../logger/logger";
 
+export interface QueryExecutionMetrics {
+  startedAt: number;
+  finishedAt: number;
+  totalMs: number;
+  connectMs: number;
+  fetchMs: number;
+  blobDecodeMs: number;
+  rowCount: number;
+  sqlPreview: string;
+}
+
 export class Utility {
+  private static lastQueryMetrics?: QueryExecutionMetrics;
+
   public static queryPromise<T>(connection: any, sql: string): Promise<T> {
     return new Promise((resolve, reject) => {
       connection.query(sql, (err: any, rows: any) => {
@@ -20,6 +33,7 @@ export class Utility {
 
   public static async runQuery(sql?: string, connectionOptions?: ConnectionOptions): Promise<any> {
     logger.debug("Run Query start...");
+    this.lastQueryMetrics = undefined;
 
     if (!sql && !window.activeTextEditor) {
       return Promise.reject({
@@ -65,40 +79,71 @@ export class Utility {
 
     logger.info("Executing Firebird query...");
 
-    return await new Promise((resolve, reject) => {
-      Utility.createConnection(connectionOptions).then(connection => {
-        connection.query(sql, [], async (err, result) => {
-          if (err) {
-            connection.detach();
-            return reject(err);
-          }
+    const queryStartedAt = Date.now();
 
-          if (result !== undefined) {
-            //convert blob
-            await result.forEach(resultRow => {
-              Object.keys(resultRow).forEach(field => {
-                if (resultRow[field] instanceof Function) {
-                  resultRow[field]((err, name, e) => {
-                    e.on("data", chunk => {
-                      resultRow[field] = chunk;
+    return await new Promise((resolve, reject) => {
+      const connectStartedAt = Date.now();
+      Utility.createConnection(connectionOptions)
+        .then(connection => {
+          const connectMs = Date.now() - connectStartedAt;
+          const fetchStartedAt = Date.now();
+          connection.query(sql, [], async (err, result) => {
+            const fetchMs = Date.now() - fetchStartedAt;
+            if (err) {
+              connection.detach();
+              this.lastQueryMetrics = undefined;
+              return reject(err);
+            }
+
+            if (result !== undefined) {
+              const blobDecodeStartedAt = Date.now();
+              // convert blob fields
+              for (const resultRow of result) {
+                for (const field of Object.keys(resultRow)) {
+                  if (resultRow[field] instanceof Function) {
+                    await new Promise<void>(res => {
+                      resultRow[field]((blobErr: any, _name: any, e: any) => {
+                        if (blobErr || !e) { res(); return; }
+                        const chunks: Buffer[] = [];
+                        e.on("data", (chunk: Buffer) => chunks.push(chunk));
+                        e.on("end", () => { resultRow[field] = Buffer.concat(chunks); res(); });
+                        e.on("error", () => res());
+                      });
                     });
-                  });
+                  }
                 }
-              });
-            });
-            connection.detach();
-            logger.info("Finished Firebird query, displaying results... ");
-            return resolve(result);
-          } else {
-            connection.detach();
-            // because node-firebird plugin doesn't have callback on successfull ddl statements (test further)
-            logger.info("Finished Firebird query.");
-            const ddl = this.constructResponse(sql);
-            return resolve([{ message: `${ddl} command executed successfully!` }]);
-          }
+              }
+              const blobDecodeMs = Date.now() - blobDecodeStartedAt;
+              connection.detach();
+              this.lastQueryMetrics = this.buildQueryMetrics(
+                sql,
+                queryStartedAt,
+                connectMs,
+                fetchMs,
+                blobDecodeMs,
+                Array.isArray(result) ? result.length : 0
+              );
+              logger.info("Finished Firebird query, displaying results... ");
+              return resolve(result);
+            } else {
+              connection.detach();
+              // node-firebird doesn't call back with result on successful DDL statements
+              this.lastQueryMetrics = this.buildQueryMetrics(sql, queryStartedAt, connectMs, fetchMs, 0, 0);
+              logger.info("Finished Firebird query.");
+              const ddl = this.constructResponse(sql);
+              return resolve([{ message: `${ddl} command executed successfully!` }]);
+            }
+          });
+        })
+        .catch(err => {
+          this.lastQueryMetrics = undefined;
+          reject(err);
         });
-      });
     });
+  }
+
+  public static getLastQueryMetrics(): QueryExecutionMetrics | undefined {
+    return this.lastQueryMetrics;
   }
 
   public static async createSQLTextDocument(sql?: string): Promise<TextEditor> {
@@ -119,6 +164,7 @@ export class Utility {
     } else if (string.indexOf("delete") > -1) {
       return "Delete";
     }
+    return "Query";
   }
 
   public static async createConnection(connectionOptions: any): Promise<Firebird.Database> {
@@ -126,10 +172,39 @@ export class Utility {
       Firebird.attach(connectionOptions, (err, db) => {
         if (err) {
           logger.error(err.message);
-          reject(err);
+          return reject(err);
         }
         resolve(db);
       });
     });
+  }
+
+  private static buildQueryMetrics(
+    sql: string,
+    startedAt: number,
+    connectMs: number,
+    fetchMs: number,
+    blobDecodeMs: number,
+    rowCount: number
+  ): QueryExecutionMetrics {
+    const finishedAt = Date.now();
+    return {
+      startedAt,
+      finishedAt,
+      totalMs: finishedAt - startedAt,
+      connectMs,
+      fetchMs,
+      blobDecodeMs,
+      rowCount,
+      sqlPreview: this.getSqlPreview(sql)
+    };
+  }
+
+  private static getSqlPreview(sql: string): string {
+    const normalizedSql = sql.replace(/\s+/g, " ").trim();
+    if (normalizedSql.length <= 160) {
+      return normalizedSql;
+    }
+    return `${normalizedSql.slice(0, 157)}...`;
   }
 }
