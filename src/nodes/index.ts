@@ -3,3 +3,5 @@ export * from "./node-database";
 export * from "./node-table";
 export * from "./node-field";
 export * from "./node-info";
+export * from "./node-collection";
+export * from "./node-view";

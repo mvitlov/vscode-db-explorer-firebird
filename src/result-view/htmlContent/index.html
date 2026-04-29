@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- Import stylesheets -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link type="text/css" rel="stylesheet" href="/css/loader.css" media="screen,projection" />
-    <link type="text/css" rel="stylesheet" href="/css/datatables.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="/css/ag-grid.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="/css/ag-theme-balham.min.css" media="screen,projection" />
     <link type="text/css" rel="stylesheet" href="/css/app.css" media="screen,projection" />
+    <title>Firebird Query Results</title>
   </head>
 
   <body>
@@ -13,26 +16,37 @@
       <div class="loader-section section-left"></div>
       <div class="loader-section section-right"></div>
     </div>
-    <div id="content">
-      <div class="container" id="query-stats" style="width:100%">
-        <div class="stats-item"><span class="stats-label">Rows</span><span id="stats-rows">-</span></div>
-        <div class="stats-item"><span class="stats-label">Total</span><span id="stats-total">-</span></div>
-        <div class="stats-item"><span class="stats-label">Connection</span><span id="stats-connect">-</span></div>
-        <div class="stats-item"><span class="stats-label">Fetching</span><span id="stats-fetch">-</span></div>
-        <div class="stats-item"><span class="stats-label">Blob Decode</span><span id="stats-blob">-</span></div>
-        <div class="stats-item stats-query"><span class="stats-label">SQL</span><span id="stats-sql">-</span></div>
-      </div>
-      <div class="container" id="zero-results" style="display:none; width:100%"><p>Records found: 0</p></div>
-      <div class="container" style="width:100%">
-        <table id="example" class="row-border order-column cell-border compact display" style="width:100%;"></table>
+
+    <div id="content" class="results-shell">
+      <header class="results-header">
+        <div>
+          <h1 id="panel-title">Result grid</h1>
+          <p id="panel-subtitle" class="panel-subtitle">Run a query to inspect rows here.</p>
+        </div>
+        <div id="query-stats" class="stats-grid"></div>
+      </header>
+
+      <section id="sql-strip" class="sql-strip" hidden>
+        <div class="sql-strip-label">SQL</div>
+        <div id="sql-preview" class="sql-preview"></div>
+        <button id="copy-sql" class="copy-sql-icon" type="button" title="Copy SQL">📋</button>
+      </section>
+
+      <section id="empty-state" class="empty-state" hidden>
+        <h2>No rows to display</h2>
+        <p>The command ran, but no records were returned for the current result set.</p>
+      </section>
+
+      <section id="table-shell" class="table-shell" hidden>
+        <div id="ag-grid-container" class="ag-theme-custom" style="height: 100%; width: 100%;"></div>
+      </section>
+
+      <div class="table-footer">
+        <div id="csv-actions" class="csv-actions"></div>
       </div>
     </div>
 
-    <!-- JavaScript at end of body for optimized loading -->
-    <script type="text/javascript" src="/js/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/pdfmake.min.js"></script>
-    <script type="text/javascript" src="/js/vfs_fonts.min.js"></script>
-    <script type="text/javascript" src="/js/datatables.min.js"></script>
+    <script type="text/javascript" src="/js/ag-grid-community.min.js"></script>
     <script type="text/javascript" src="/js/app.js"></script>
   </body>
 </html>

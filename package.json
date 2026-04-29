@@ -98,12 +98,32 @@
       },
       {
         "command": "firebird.runQuery",
-        "title": "Run Firebird Query",
+        "title": "Run SQL Document",
         "category": "Firebird",
         "icon": {
           "light": "resources/icons/light/run-query.svg",
           "dark": "resources/icons/dark/run-query.svg"
         }
+      },
+      {
+        "command": "firebird.runQuerySelection",
+        "title": "Run Selected Query",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.runQueryDocument",
+        "title": "Run Entire SQL Document",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.results.show",
+        "title": "Show Query Results",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.results.clear",
+        "title": "Clear Query Results",
+        "category": "Firebird"
       },
       {
         "command": "firebird.newQuery",
@@ -113,6 +133,31 @@
       {
         "command": "firebird.selectAllRecords",
         "title": "Select All Records",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.table.previewRecords",
+        "title": "Preview Records",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.table.countRecords",
+        "title": "Count Records",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.table.insertSelectTemplate",
+        "title": "Open SELECT Template",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.table.insertPreviewTemplate",
+        "title": "Open Preview Query Template",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.table.copyName",
+        "title": "Copy Table Name",
         "category": "Firebird"
       },
       {
@@ -128,6 +173,11 @@
       {
         "command": "firebird.selectFieldRecords",
         "title": "Select All Field Records",
+        "category": "Firebird"
+      },
+      {
+        "command": "firebird.view.previewRecords",
+        "title": "Preview View Records",
         "category": "Firebird"
       }
     ],
@@ -169,14 +219,26 @@
         "firebird.recordsPerPage": {
           "type": "string",
           "enum": [
-            "10",
-            "25",
             "50",
             "100",
+            "500",
+            "1000",
             "All records"
           ],
-          "default": "10",
+          "default": "50",
           "description": "Number of records per page to show in results view."
+        },
+        "firebird.previewRecordLimit": {
+          "type": "integer",
+          "default": 200,
+          "minimum": 1,
+          "description": "Default row limit used by preview actions and generated preview query templates."
+        },
+        "firebird.maxCellPreviewLength": {
+          "type": "integer",
+          "default": 120,
+          "minimum": 25,
+          "description": "Maximum number of characters shown inline for each cell before the result grid truncates the preview."
         }
       }
     },
@@ -193,6 +255,11 @@
           "command": "firebird.runQuery",
           "when": "editorLangId == sql",
           "group": "navigation"
+        },
+        {
+          "command": "firebird.runQuerySelection",
+          "when": "editorLangId == sql",
+          "group": "navigation@1"
         }
       ],
       "editor/context": [
@@ -200,6 +267,11 @@
           "command": "firebird.runQuery",
           "when": "editorLangId == sql",
           "group": "navigation"
+        },
+        {
+          "command": "firebird.runQuerySelection",
+          "when": "editorLangId == sql",
+          "group": "navigation@1"
         }
       ],
       "view/title": [
@@ -256,18 +328,48 @@
           "group": "firebird@1"
         },
         {
-          "command": "firebird.selectAllRecords",
+          "command": "firebird.table.previewRecords",
           "when": "view == firebird-explorer && viewItem == table",
           "group": "firebird@2"
         },
         {
-          "command": "firebird.table.dropTable",
+          "command": "firebird.table.countRecords",
+          "when": "view == firebird-explorer && viewItem == table",
+          "group": "firebird@3"
+        },
+        {
+          "command": "firebird.table.insertSelectTemplate",
+          "when": "view == firebird-explorer && viewItem == table",
+          "group": "firebird@4"
+        },
+        {
+          "command": "firebird.table.insertPreviewTemplate",
+          "when": "view == firebird-explorer && viewItem == table",
+          "group": "firebird@5"
+        },
+        {
+          "command": "firebird.table.copyName",
+          "when": "view == firebird-explorer && viewItem == table",
+          "group": "firebird@6"
+        },
+        {
+          "command": "firebird.selectAllRecords",
           "when": "view == firebird-explorer && viewItem == table",
           "group": "other@0"
         },
         {
+          "command": "firebird.table.dropTable",
+          "when": "view == firebird-explorer && viewItem == table",
+          "group": "other@1"
+        },
+        {
           "command": "firebird.selectFieldRecords",
           "when": "view == firebird-explorer && viewItem == field",
+          "group": "firebird@0"
+        },
+        {
+          "command": "firebird.view.previewRecords",
+          "when": "view == firebird-explorer && viewItem == view",
           "group": "firebird@0"
         }
       ]
@@ -301,14 +403,14 @@
   "devDependencies": {
     "@types/node": "25.6.0",
     "@types/uuid": "11.0.0",
-    "@types/vscode": "1.116.0",
-    "@typescript-eslint/eslint-plugin": "8.59.0",
-    "@typescript-eslint/parser": "8.59.0",
+    "@types/vscode": "1.118.0",
+    "@typescript-eslint/eslint-plugin": "8.59.1",
+    "@typescript-eslint/parser": "8.59.1",
     "eslint": "10.2.1",
     "typescript": "6.0.3"
   },
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.116.0"
   },
   "icon": "resources/img/icon.png",
   "galleryBanner": {

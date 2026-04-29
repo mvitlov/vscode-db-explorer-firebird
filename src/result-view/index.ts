@@ -4,12 +4,14 @@ import { join } from "path";
 
 import { QueryResultsView, Message } from "./queryResultsView";
 import { QueryExecutionMetrics } from "../shared/utility";
+import { Global } from "../shared/global";
+import { getOptions } from "../config";
 
 type ResultSet = Array<any>;
 
 export default class ResultView extends QueryResultsView implements Disposable {
   private resultSet?: ResultSet;
-  private recordsPerPage: string;
+  private recordsPerPage: string = getOptions().recordsPerPage;
   private executionMetrics?: QueryExecutionMetrics;
 
   constructor(private extensionPath: string) {
@@ -20,12 +22,26 @@ export default class ResultView extends QueryResultsView implements Disposable {
     this.resultSet = resultSet;
     this.recordsPerPage = recordsPerPage;
     this.executionMetrics = executionMetrics;
+    this.setRuntimeTitle();
 
     /**
      * Path to HTML files for displaying results in VS Code WebView
      * DEV: "src",...
      * PROD: "out",...
      */
+    this.show(join(this.extensionPath, "out", "result-view", "htmlContent", "index.html"));
+  }
+
+  clear() {
+    this.resultSet = [];
+    this.recordsPerPage = getOptions().recordsPerPage;
+    this.executionMetrics = undefined;
+    this.setRuntimeTitle();
+    this.show(join(this.extensionPath, "out", "result-view", "htmlContent", "index.html"));
+  }
+
+  reopen() {
+    this.setRuntimeTitle();
     this.show(join(this.extensionPath, "out", "result-view", "htmlContent", "index.html"));
   }
 
@@ -45,7 +61,9 @@ export default class ResultView extends QueryResultsView implements Disposable {
           tableHeader: [],
           tableBody: [],
           recordsPerPage: this.recordsPerPage,
-          execution: this.executionMetrics || null
+          execution: this.executionMetrics || null,
+          summary: this.getResultSummary(0, 0),
+          maxCellPreviewLength: getOptions().maxCellPreviewLength
         }
       });
     }
@@ -56,13 +74,15 @@ export default class ResultView extends QueryResultsView implements Disposable {
     let decoder = new TextDecoder();
     let tableHeader: Object[] = [];
     let tableBody: string[][] = [];
+    const maxCellPreviewLength = getOptions().maxCellPreviewLength;
 
     if (!this.resultSet || this.resultSet.length === 0) {
       return {
         tableHeader: [],
         tableBody: [],
         recordsPerPage: this.recordsPerPage,
-        execution: this.executionMetrics || null
+        execution: this.executionMetrics || null,
+        summary: this.getResultSummary(0, 0)
       };
     }
     /* get table header */
@@ -79,7 +99,7 @@ export default class ResultView extends QueryResultsView implements Disposable {
         if (row.hasOwnProperty(field)) {
           // check if null
           if (row[field] === null) {
-            temp.push("&lt;null&gt;");
+            temp.push("__FIREBIRD_NULL__");
           }
           // check if buffer array
           else if (row[field] instanceof Buffer) {
@@ -87,7 +107,7 @@ export default class ResultView extends QueryResultsView implements Disposable {
           }
           // check if timestamp
           else if (Object.prototype.toString.call(row[field]) === "[object Date]") {
-            temp.push(new Date(row[field]).toLocaleDateString());
+            temp.push(new Date(row[field]).toLocaleString());
           }
           // check if array
           else if (typeof row[field] === "object") {
@@ -108,7 +128,41 @@ export default class ResultView extends QueryResultsView implements Disposable {
       tableHeader: tableHeader,
       tableBody: tableBody,
       recordsPerPage: this.recordsPerPage,
-      execution: this.executionMetrics || null
+      execution: this.executionMetrics || null,
+      summary: this.getResultSummary(tableHeader.length, tableBody.length),
+      maxCellPreviewLength
     };
+  }
+
+  private getResultSummary(columnCount: number, rowCount: number) {
+    const connection = Global.activeConnection;
+    const database = connection
+      ? connection.database
+          .split("\\")
+          .pop()
+          .split("/")
+          .pop()
+      : null;
+
+    return {
+      rowCount,
+      columnCount,
+      database,
+      host: connection ? connection.host : null,
+      executedAt: this.executionMetrics ? new Date(this.executionMetrics.finishedAt).toLocaleString() : null
+    };
+  }
+
+  private setRuntimeTitle() {
+    const rows = this.resultSet ? this.resultSet.length : 0;
+    const database = Global.activeConnection
+      ? Global.activeConnection.database
+          .split("\\")
+          .pop()
+          .split("/")
+          .pop()
+      : "No active database";
+
+    this.setTitle(`Firebird Results • ${database} • ${rows} row${rows === 1 ? "" : "s"}`);
   }
 }

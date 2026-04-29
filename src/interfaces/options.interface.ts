@@ -5,4 +5,6 @@ export interface Options {
   codeCompletionDatabase: boolean;
   logLevel: string;
   recordsPerPage: string;
+  previewRecordLimit: number;
+  maxCellPreviewLength: number;
 }

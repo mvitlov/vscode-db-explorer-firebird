@@ -9,15 +9,7 @@
 <h4 align="center">Explore and run queries against your Firebird&reg; databases without leaving VS Code.</h4>
 
 <p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=marinv.vscode-db-explorer-firebird">
-    <img src="https://vsmarketplacebadge.apphb.com/version/marinv.vscode-db-explorer-firebird.svg" alt="badge-version">
-  </a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=marinv.vscode-db-explorer-firebird">
-    <img src="https://vsmarketplacebadge.apphb.com/installs/marinv.vscode-db-explorer-firebird.svg" alt="badge-installs">
-  </a>
-  <!-- <a href="https://">
-    <img src="https://" alt="badge3">
-  </a> -->
+  <a href="https://marketplace.visualstudio.com/items?itemName=marinv.vscode-db-explorer-firebird">Visual Studio Marketplace</a>
 </p>
 
 This extension allows you to connect directly to your [Firebird&reg; databases](https://firebirdsql.org/), list tables and fields, run queries, display/export results and more.

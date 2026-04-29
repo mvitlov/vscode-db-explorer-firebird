@@ -1,8 +1,14 @@
-import { TreeItem, TreeItemCollapsibleState, commands, Uri } from "vscode";
+import { TreeItem, TreeItemCollapsibleState, commands, Uri, env } from "vscode";
 import { join } from "path";
 import { NodeField, NodeInfo } from ".";
 import { ConnectionOptions, FirebirdTree, Options } from "../interfaces";
-import { selectAllRecordsQuery, tableInfoQuery, dropTableQuery } from "../shared/queries";
+import {
+  selectAllRecordsQuery,
+  tableInfoQuery,
+  dropTableQuery,
+  countRecordsQuery,
+  previewRecordsQuery
+} from "../shared/queries";
 import { Global } from "../shared/global";
 import { Utility } from "../shared/utility";
 import { logger } from "../logger/logger";
@@ -73,6 +79,50 @@ export class NodeTable implements FirebirdTree {
       .catch(err => {
         logger.error(err);
       });
+  }
+
+  public async previewRecords(limit: number) {
+    logger.info("Custom Query: Preview Records");
+
+    const qry = previewRecordsQuery(this.table.trim(), limit);
+    Global.activeConnection = this.dbDetails;
+
+    return Utility.runQuery(qry, this.dbDetails)
+      .then(result => {
+        return result;
+      })
+      .catch(err => {
+        logger.error(err);
+      });
+  }
+
+  public async countRecords() {
+    logger.info("Custom Query: Count Records");
+
+    const qry = countRecordsQuery(this.table.trim());
+    Global.activeConnection = this.dbDetails;
+
+    return Utility.runQuery(qry, this.dbDetails)
+      .then(result => {
+        return result;
+      })
+      .catch(err => {
+        logger.error(err);
+      });
+  }
+
+  public async insertSelectTemplate(limit?: number) {
+    const sql = limit
+      ? `SELECT FIRST ${Math.abs(limit)} *\nFROM ${this.table.trim()}\nORDER BY 1;`
+      : `SELECT *\nFROM ${this.table.trim()}\nORDER BY 1;`;
+
+    Global.activeConnection = this.dbDetails;
+    return Utility.createSQLTextDocument(sql);
+  }
+
+  public async copyName() {
+    await env.clipboard.writeText(this.table.trim());
+    logger.showInfo(`Copied table name: ${this.table.trim()}`);
   }
 
   public async dropTable() {

@@ -54,6 +54,10 @@ export class Global {
     }
   }
 
+  public static isActiveConnection(connection: ConnectionOptions): boolean {
+    return !!this._activeConnection && this._activeConnection.id === connection.id;
+  }
+
   private static getStatusBarItemText(activeConnection: ConnectionOptions): string {
     return `FIREBIRD: $(server) ${activeConnection.host} $(database) ${activeConnection.database
       .split("\\")

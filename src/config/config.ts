@@ -11,7 +11,9 @@ export function getOptions() {
     codeCompletionKeywords: _codeCompletionKeywords(),
     codeCompletionDatabase: _codeCompletionDatabase(),
     logLevel: _logLevel(),
-    recordsPerPage: _recordsPerPage()
+    recordsPerPage: _recordsPerPage(),
+    previewRecordLimit: _previewRecordLimit(),
+    maxCellPreviewLength: _maxCellPreviewLength()
   } as Options;
 }
 
@@ -79,7 +81,7 @@ function _logLevel(): string {
 }
 
 function _recordsPerPage(): string {
-  const valid: string[] = ["10", "25", "50", "100", "All records"];
+  const valid: string[] = ["50", "100", "500", "1000", "All records"];
   const recordsPerPageConf: any = getConfig().get("recordsPerPage");
   const recordsPerPage: any = properties["firebird.recordsPerPage"]["default"];
 
@@ -88,4 +90,26 @@ function _recordsPerPage(): string {
   }
   logger.error("Invalid value detected in Records Per Page settings. Fallback to default value.");
   return recordsPerPage;
+}
+
+function _previewRecordLimit(): number {
+  const previewRecordLimitConf: any = getConfig().get("previewRecordLimit");
+  const previewRecordLimit: number = properties["firebird.previewRecordLimit"]["default"];
+
+  if (typeof previewRecordLimitConf === "number" && previewRecordLimitConf > 0) {
+    return previewRecordLimitConf;
+  }
+  logger.error("Invalid value detected in Preview Record Limit settings. Fallback to default value.");
+  return previewRecordLimit;
+}
+
+function _maxCellPreviewLength(): number {
+  const maxCellPreviewLengthConf: any = getConfig().get("maxCellPreviewLength");
+  const maxCellPreviewLength: number = properties["firebird.maxCellPreviewLength"]["default"];
+
+  if (typeof maxCellPreviewLengthConf === "number" && maxCellPreviewLengthConf > 24) {
+    return maxCellPreviewLengthConf;
+  }
+  logger.error("Invalid value detected in Max Cell Preview Length settings. Fallback to default value.");
+  return maxCellPreviewLength;
 }

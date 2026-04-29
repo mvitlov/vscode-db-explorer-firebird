@@ -1,231 +1,566 @@
-div.container {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--vscode-editor-background);
+  color: var(--vscode-editor-foreground);
+  font-family: var(--vscode-font-family);
 }
 
-#query-stats {
+body {
+  min-height: 100vh;
+}
+
+.results-shell {
+  padding: 14px 14px 18px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
+  flex-direction: column;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  color: var(--vscode-descriptionForeground);
+}
+
+#panel-title {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.panel-subtitle {
+  margin: 6px 0 0;
+  color: var(--vscode-descriptionForeground);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(88px, 1fr));
+  gap: 8px;
+  flex: 1;
 }
 
 .stats-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.25rem 0.55rem;
-  border-radius: 4px;
+  padding: 8px 10px;
   border: 1px solid var(--vscode-panel-border);
-  background: var(--vscode-editorWidget-background);
-  color: var(--vscode-editor-foreground);
-  font-size: 11px;
-  line-height: 1.4;
-}
-
-.stats-query {
-  max-width: min(100%, 800px);
+  border-radius: 6px;
+  background: var(--vscode-sideBar-background);
+  min-width: 0;
 }
 
 .stats-label {
-  opacity: 0.75;
-  font-weight: bold;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--vscode-descriptionForeground);
 }
 
-#stats-sql {
-  font-family: var(--vscode-editor-font-family);
+.stats-value {
+  display: block;
+  font-size: 12px;
+  line-height: 1.35;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 640px;
 }
 
-/* DARK STYLE TABLE */
-body.vscode-dark .ellipsis {
-  color: var(--vscode-editor-foreground) !important;
-}
-body.vscode-dark .dataTables_info,
-.dataTables_filter {
-  color: var(--vscode-editor-foreground) !important;
+.sql-strip-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--vscode-descriptionForeground);
 }
 
-body.vscode-dark .sorting_1 {
-  background-color: var(--vscode-editor-selectionBackground) !important;
-  color: var(--vscode-editor-selectionForeground) !important;
+.sql-preview {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--vscode-editor-font-family);
+  font-size: 12px;
 }
 
-body.vscode-dark .dt-button.buttons-collection:hover {
-  background: var(--vscode-button-hoverBackground) !important;
+
+
+.toolbar-toggles {
+  display: none;
 }
 
-body.vscode-dark .dt-button-collection {
-  background: var(--vscode-sideBar-background) !important;
-  border-radius: 0;
+.toolbar-left {
+  flex-wrap: wrap;
 }
 
-body.vscode-dark .paginate_button {
-  color: var(--vscode-button-foreground) !important;
-  border: none !important;
-  background-color: transparent !important;
+.search-shell {
+  display: none;
 }
 
-body.vscode-dark .paginate_button.current,
-.buttons-collection,
-.dt-button {
-  border: none !important;
-  color: var(--vscode-button-foreground) !important;
-  background: var(--vscode-button-background) !important;
-}
-body.vscode-dark .paginate_button:hover,
-.buttons-collection:hover {
-  border: none !important;
-  background: var(--vscode-button-hoverBackground) !important;
-}
-
-body.vscode-dark .paginate_button.disabled {
-  color: var(--vscode-editor-foreground) !important;
-  background-color: var(--vscode-editor-background) !important;
+.search-shell input,
+.column-filter-input,
+.column-filter-operator {
+  padding: 6px 8px;
+  border: 1px solid var(--vscode-input-border, var(--vscode-panel-border));
+  border-radius: 4px;
+  outline: none;
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  box-sizing: border-box;
 }
 
-body.vscode-dark th {
-  background-color: var(--vscode-sideBar-background);
-  color: var(--vscode-sideBar-foreground);
+.search-shell input {
+  min-width: 220px;
 }
 
-body.vscode-dark tr {
-  background-color: transparent !important;
+.search-shell input:focus,
+.column-filter-input:focus,
+.column-filter-operator:focus {
+  border-color: var(--vscode-focusBorder);
 }
 
-body.vscode-dark table.dataTable thead .sorting_asc {
-  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23ECF0F1;%7D %3C/style%3E%3Cpath class='st0' d='M89.7,49.6L67.2,26.1c-1.8-1.9-4.6-1.9-6.4,0L38.3,49.6c-2.8,3-0.8,8.1,3.2,8.1h44.9 C90.5,57.7,92.5,52.6,89.7,49.6z'/%3E%3C/svg%3E%0A");
-}
-body.vscode-dark table.dataTable thead .sorting_desc {
-  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23ECF0F1;%7D %3C/style%3E%3Cpath class='st0' d='M41.5,70.3h44.9c4,0,6.1,5.1,3.2,8.1l-22.5,23.5c-1.8,1.9-4.6,1.9-6.4,0L38.3,78.4 C35.5,75.4,37.5,70.3,41.5,70.3z'/%3E%3C/svg%3E%0A");
-}
-body.vscode-dark table.dataTable thead .sorting {
-  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%237F8C8D;%7D %3C/style%3E%3Cpath class='st0' d='M41.5,70.3h44.9c4,0,6.1,5.1,3.2,8.1l-22.5,23.5c-1.8,1.9-4.6,1.9-6.4,0L38.3,78.4 C35.5,75.4,37.5,70.3,41.5,70.3z M89.7,49.6L67.2,26.1c-1.8-1.9-4.6-1.9-6.4,0L38.3,49.6c-2.8,3-0.8,8.1,3.2,8.1h44.9 C90.5,57.7,92.5,52.6,89.7,49.6z'/%3E%3C/svg%3E%0A");
-}
-
-/* LIGHT STYLE TABLE */
-body.vscode-light .dataTables_info,
-.dataTables_filter {
-  color: var(--vscode-editor-foreground) !important;
+.toolbar-button,
+.dt-button.toolbar-button,
+.dt-button.dt-host-button {
+  padding: 6px 10px !important;
+  border: 1px solid transparent !important;
+  border-radius: 4px !important;
+  background: var(--vscode-button-secondaryBackground) !important;
+  color: var(--vscode-button-secondaryForeground) !important;
+  box-shadow: none !important;
+  font-size: 12px !important;
+  line-height: 1.2 !important;
 }
 
-body.vscode-light .sorting_1 {
-  background-color: var(--vscode-editor-selectionBackground) !important;
-  color: var(--vscode-editor-selectionForeground) !important;
-}
-body.vscode-light .dt-button.buttons-collection:hover {
-  background: var(--vscode-button-hoverBackground) !important;
+.toolbar-button:hover,
+.dt-button.toolbar-button:hover,
+.dt-button.dt-host-button:hover {
+  background: var(--vscode-button-secondaryHoverBackground) !important;
 }
 
-body.vscode-light .dt-button-collection {
-  background: var(--vscode-sideBar-background) !important;
-  border-radius: 0;
-}
-body.vscode-light .paginate_button {
-  color: var(--vscode-editor-foreground) !important;
-  border: none !important;
-  background-color: transparent !important;
+.empty-state {
+  padding: 24px 18px;
+  border: 1px dashed var(--vscode-panel-border);
+  border-radius: 6px;
+  background: var(--vscode-sideBar-background);
 }
 
-body.vscode-light .paginate_button.current,
-.buttons-collection,
-.dt-button {
-  border: none !important;
-  color: var(--vscode-button-foreground) !important;
-  background: var(--vscode-button-background) !important;
-}
-body.vscode-light .paginate_button:hover,
-.buttons-collection:hover {
-  border: none !important;
-  background: var(--vscode-button-hoverBackground) !important;
+.empty-state h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
 }
 
-body.vscode-light .paginate_button.disabled {
-  color: var(--vscode-editor-foreground) !important;
-  background-color: var(--vscode-editor-background) !important;
+.empty-state p {
+  margin: 0;
+  color: var(--vscode-descriptionForeground);
 }
 
-body.vscode-light th {
-  background-color: var(--vscode-sideBar-background);
-  color: var(--vscode-sideBar-foreground);
+.table-shell {
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--vscode-editor-background);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 300px;
 }
 
-body.vscode-light tr {
-  background-color: transparent !important;
+#ag-grid-container {
+  width: 100%;
+  flex: 1;
+  position: relative;
 }
 
-body.vscode-light table.dataTable thead .sorting_asc {
-  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%232C3E50;%7D %3C/style%3E%3Cpath class='st0' d='M89.7,49.6L67.2,26.1c-1.8-1.9-4.6-1.9-6.4,0L38.3,49.6c-2.8,3-0.8,8.1,3.2,8.1h44.9 C90.5,57.7,92.5,52.6,89.7,49.6z'/%3E%3C/svg%3E%0A");
-}
-body.vscode-light table.dataTable thead .sorting_desc {
-  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%232C3E50;%7D %3C/style%3E%3Cpath class='st0' d='M41.5,70.3h44.9c4,0,6.1,5.1,3.2,8.1l-22.5,23.5c-1.8,1.9-4.6,1.9-6.4,0L38.3,78.4 C35.5,75.4,37.5,70.3,41.5,70.3z'/%3E%3C/svg%3E%0A");
-}
-body.vscode-light table.dataTable thead .sorting {
-  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23BDC3C7;%7D %3C/style%3E%3Cpath class='st0' d='M41.5,70.3h44.9c4,0,6.1,5.1,3.2,8.1l-22.5,23.5c-1.8,1.9-4.6,1.9-6.4,0L38.3,78.4 C35.5,75.4,37.5,70.3,41.5,70.3z M89.7,49.6L67.2,26.1c-1.8-1.9-4.6-1.9-6.4,0L38.3,49.6c-2.8,3-0.8,8.1,3.2,8.1h44.9 C90.5,57.7,92.5,52.6,89.7,49.6z'/%3E%3C/svg%3E%0A");
+.table-footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 0px 0px 0px;
+  gap: 10px;
 }
 
-/* HIGH CONTRAST STYLE TABLE */
-body.vscode-high-contrast .ellipsis {
-  color: var(--vscode-editor-foreground) !important;
-}
-body.vscode-high-contrast .dataTables_info,
-.dataTables_filter {
-  color: var(--vscode-editor-foreground) !important;
+.csv-actions {
+  display: flex;
+  gap: 8px;
 }
 
-body.vscode-high-contrast .sorting_1 {
-  /* background-color: var(--vscode-editor-selectionBackground) !important; */
-  background: transparent !important;
-  border: 1px solid var(--vscode-contrastActiveBorder) !important;
-  font-weight: bold;
-  /* color: var(--vscode-editor-selectionForeground) !important; */
+.csv-action-button {
+  padding: 6px 10px !important;
+  border: 1px solid transparent !important;
+  border-radius: 4px !important;
+  background: var(--vscode-button-secondaryBackground) !important;
+  color: var(--vscode-button-secondaryForeground) !important;
+  box-shadow: none !important;
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+  cursor: pointer;
 }
 
-body.vscode-high-contrast .dt-button-collection {
-  background: var(--vscode-sideBar-background) !important;
-  /* border-radius: 0; */
-}
-body.vscode-high-contrast .paginate_button {
-  color: var(--vscode-button-foreground) !important;
-  background-color: transparent !important;
+.csv-action-button:hover {
+  background: var(--vscode-button-secondaryHoverBackground) !important;
 }
 
-body.vscode-high-contrast .paginate_button.current,
-.buttons-collection,
-.dt-button {
-  border: 1px solid var(--vscode-contrastActiveBorder) !important;
-  color: var(--vscode-button-foreground) !important;
-  background: var(--vscode-button-background) !important;
-}
-body.vscode-high-contrast .paginate_button:hover,
-.buttons-collection:hover {
-  border: 1px solid var(--vscode-contrastActiveBorder) !important;
-  background: transparent !important;
-}
-
-body.vscode-high-contrast .paginate_button.disabled {
-  color: var(--vscode-editor-foreground) !important;
-  background-color: var(--vscode-editor-background) !important;
+.sql-strip {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 32px;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 6px;
+  background: var(--vscode-sideBar-background);
 }
 
-body.vscode-high-contrast th {
-  background-color: var(--vscode-sideBar-background);
-  border: 1px solid var(--vscode-contrastActiveBorder) !important;
+.copy-sql-icon {
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+}
+
+.copy-sql-icon:hover {
+  background: var(--vscode-button-secondaryHoverBackground);
+}
+
+/* AG Grid Custom Theme */
+.ag-theme-custom {
+  --ag-grid-size: 4px;
+  --ag-list-item-height: 28px;
+  --ag-row-height: 32px;
+  --ag-font-family: var(--vscode-font-family);
+  --ag-font-size: 11px;
+  --ag-foreground-color: var(--vscode-editor-foreground);
+  --ag-background-color: var(--vscode-editor-background);
+  --ag-secondary-background-color: var(--vscode-sideBar-background);
+  --ag-border-color: var(--vscode-panel-border);
+  --ag-header-background-color: var(--vscode-editorGroupHeader-tabsBackground);
+  --ag-header-foreground-color: var(--vscode-editor-foreground);
+  --ag-header-cell-border-color: var(--vscode-panel-border);
+  --ag-selected-row-background-color: color-mix(in srgb, var(--vscode-list-selectionBackground) 40%, transparent);
+  --ag-row-hover-color: var(--vscode-list-hoverBackground);
+}
+
+.ag-theme-custom.ag-root {
+  font-size: 12px;
+  font-family: var(--vscode-font-family);
+  background-color: var(--vscode-editor-background);
   color: var(--vscode-editor-foreground);
 }
 
-body.vscode-high-contrast tr {
-  background-color: transparent !important;
+.ag-theme-custom .ag-root-wrapper {
+  border: none;
+  border-radius: 0;
+  background-color: var(--vscode-editor-background);
 }
 
-body.vscode-high-contrast table.dataTable thead .sorting_asc {
-  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23ECF0F1;%7D %3C/style%3E%3Cpath class='st0' d='M89.7,49.6L67.2,26.1c-1.8-1.9-4.6-1.9-6.4,0L38.3,49.6c-2.8,3-0.8,8.1,3.2,8.1h44.9 C90.5,57.7,92.5,52.6,89.7,49.6z'/%3E%3C/svg%3E%0A");
+.ag-theme-custom .ag-header-row {
+  background-color: var(--vscode-editorGroupHeader-tabsBackground);
+  border-bottom: 1px solid var(--vscode-panel-border);
 }
-body.vscode-high-contrast table.dataTable thead .sorting_desc {
-  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%23ECF0F1;%7D %3C/style%3E%3Cpath class='st0' d='M41.5,70.3h44.9c4,0,6.1,5.1,3.2,8.1l-22.5,23.5c-1.8,1.9-4.6,1.9-6.4,0L38.3,78.4 C35.5,75.4,37.5,70.3,41.5,70.3z'/%3E%3C/svg%3E%0A");
+
+.ag-theme-custom .ag-header-cell {
+  background-color: var(--vscode-editorGroupHeader-tabsBackground);
+  color: var(--vscode-editor-foreground);
+  border-right: 2px solid var(--vscode-panel-border);
+  font-weight: 600;
+  padding: 8px;
+  display: flex;
+  align-items: center;
 }
-body.vscode-high-contrast table.dataTable thead .sorting {
-  background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3C!-- Generator: Adobe Illustrator 21.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E%3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 128 128' width='16' height='16' style='enable-background:new 0 0 128 128;' xml:space='preserve'%3E%3Cstyle type='text/css'%3E .st0%7Bfill:%237F8C8D;%7D %3C/style%3E%3Cpath class='st0' d='M41.5,70.3h44.9c4,0,6.1,5.1,3.2,8.1l-22.5,23.5c-1.8,1.9-4.6,1.9-6.4,0L38.3,78.4 C35.5,75.4,37.5,70.3,41.5,70.3z M89.7,49.6L67.2,26.1c-1.8-1.9-4.6-1.9-6.4,0L38.3,49.6c-2.8,3-0.8,8.1,3.2,8.1h44.9 C90.5,57.7,92.5,52.6,89.7,49.6z'/%3E%3C/svg%3E%0A");
+
+.ag-theme-custom .ag-header-cell-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ag-theme-custom .ag-row {
+  background-color: var(--vscode-editor-background);
+  border-bottom: 1px solid color-mix(in srgb, var(--vscode-panel-border) 50%, transparent);
+}
+
+.ag-theme-custom .ag-row:hover .ag-cell {
+  background-color: var(--vscode-list-hoverBackground);
+}
+
+.ag-theme-custom .ag-row-selected .ag-cell {
+  background-color: color-mix(in srgb, var(--vscode-list-selectionBackground) 40%, transparent);
+}
+
+.ag-theme-custom .ag-cell {
+  background-color: transparent;
+  color: var(--vscode-editor-foreground);
+  border-right: 1px solid var(--vscode-panel-border);
+  padding: 5px 5px;
+  display: flex;
+  align-items: center;
+}
+
+.ag-theme-custom .ag-cell-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ag-cell-wrapper {
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+}
+.ag-theme-custom .ag-floating-filter-button {
+  background-color: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px 6px;
+  cursor: pointer;
+}
+
+.ag-theme-custom .ag-floating-filter-button:hover {
+  background-color: var(--vscode-button-secondaryHoverBackground);
+}
+
+.ag-theme-custom .ag-floating-filter-button-button {
+  background-color: var(--vscode-button-secondaryBackground);
+  border-color: var(--vscode-panel-border);
+}
+
+.ag-theme-custom .ag-input-field-input {
+  background-color: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border: 1px solid var(--vscode-input-border, var(--vscode-panel-border));
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 12px;
+  font-family: var(--vscode-font-family);
+}
+
+.ag-theme-custom .ag-input-field-input:focus {
+  border-color: var(--vscode-focusBorder);
+  outline: none;
+}
+
+.ag-paging-panel {
+    justify-content: flex-end;
+    background-color: var(--vscode-sideBar-background);
+}
+.ag-theme-custom .ag-pagination {
+  background-color: var(--vscode-sideBar-background);
+  border-top: 1px solid var(--vscode-panel-border);
+  padding: 8px 12px;
+}
+
+.ag-theme-custom .ag-paging-button {
+  background-color: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  margin: 0 2px;
+}
+
+.ag-theme-custom .ag-paging-button:hover:not(.ag-disabled) {
+  background-color: var(--vscode-button-secondaryHoverBackground);
+}
+
+.ag-theme-custom .ag-paging-button.ag-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ag-theme-custom .ag-paging-page-size-selector-button {
+  background-color: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.ag-theme-custom .ag-paging-page-size-selector-button:hover {
+  background-color: var(--vscode-button-secondaryHoverBackground);
+}
+
+.ag-theme-custom .ag-paging-page-size-selector-button-item {
+  background-color: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border: 1px solid var(--vscode-panel-border);
+}
+
+.ag-theme-custom .ag-pinned-left-cols-container {
+  background-color: var(--vscode-sideBar-background);
+}
+
+.ag-theme-custom .ag-pinned-right-cols-container {
+  background-color: var(--vscode-sideBar-background);
+}
+
+.ag-cell-row-index {
+  color: var(--vscode-descriptionForeground) !important;
+  text-align: right;
+  white-space: nowrap;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.cell-preview {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  min-width: 0;
+}
+
+body.wrap-cells .cell-preview,
+.cell-preview.wrap {
+  white-space: pre-wrap;
+  overflow: visible;
+  text-overflow: clip;
+  word-break: break-word;
+}
+
+.cell-null {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.null-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--vscode-badge-background) 60%, transparent);
+  color: var(--vscode-badge-foreground);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
+.cell-boolean {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  padding: 0 4px;
+}
+
+.bool-icon {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.cell-bool-true .bool-icon {
+  color: #4ec9b0;
+}
+
+.cell-bool-false .bool-icon {
+  color: #ce9178;
+}
+
+.bool-text {
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+
+.cell-datetime {
+  font-family: var(--vscode-editor-font-family);
+  font-size: 11px;
+  opacity: 0.9;
+}
+
+.cell-zero {
+  opacity: 0.5;
+  font-style: italic;
+}
+
+body.compact-rows #ag-grid-container .ag-row {
+  height: 28px !important;
+}
+
+body:not(.compact-rows) #ag-grid-container .ag-row {
+  height: 32px !important;
+}
+
+body.vscode-high-contrast .stats-item,
+body.vscode-high-contrast .results-toolbar,
+body.vscode-high-contrast .empty-state,
+body.vscode-high-contrast .table-shell,
+body.vscode-high-contrast .sql-strip {
+  border-color: var(--vscode-contrastActiveBorder);
+}
+
+@media (max-width: 1280px) {
+  .results-header {
+    flex-direction: column;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+    width: 100%;
+  }
+}
+
+@media (max-width: 1100px) {
+  .results-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-shell input {
+    min-width: 180px;
+    width: 100%;
+  }
+}
+
+/* Copy Feedback Toast */
+.copy-feedback-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 12px 16px;
+  background: var(--vscode-notifications-background);
+  color: var(--vscode-notifications-foreground);
+  border: 1px solid var(--vscode-notifications-border);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 300ms ease;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.copy-feedback-toast.show {
+  opacity: 1;
+  transform: translateY(0);
 }

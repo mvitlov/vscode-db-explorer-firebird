@@ -14,7 +14,7 @@ export class QueryResultsView extends EventEmitter implements Disposable {
   private disposable?: Disposable;
 
   private resourcesPath: string;
-  private panel: WebviewPanel | undefined;
+  protected panel: WebviewPanel | undefined;
   private htmlCache: { [path: string]: string };
   constructor(private type: string, private title: string) {
     super();
@@ -26,6 +26,8 @@ export class QueryResultsView extends EventEmitter implements Disposable {
     this.resourcesPath = dirname(htmlPath);
     if (!this.panel) {
       this.init();
+    } else {
+      this.panel.reveal(ViewColumn.Two, false);
     }
 
     this.readFile(htmlPath, (html: string) => {
@@ -94,6 +96,12 @@ export class QueryResultsView extends EventEmitter implements Disposable {
     if (this.panel) {
       this.panel.webview.postMessage(message);
       logger.info("Results displayed.");
+    }
+  }
+
+  setTitle(title: string) {
+    if (this.panel) {
+      this.panel.title = title;
     }
   }
 

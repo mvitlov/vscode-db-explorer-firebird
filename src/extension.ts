@@ -1,7 +1,7 @@
 import { ExtensionContext, window, commands, workspace } from "vscode";
 import { Constants, getOptions } from "./config";
 import { FirebirdTreeDataProvider } from "./firebirdTreeDataProvider";
-import { NodeHost, NodeDatabase, NodeTable, NodeField } from "./nodes";
+import { NodeHost, NodeDatabase, NodeTable, NodeField, NodeView } from "./nodes";
 import { Options, FirebirdTree } from "./interfaces";
 import { connectionPicker } from "./shared/connection-picker";
 import { Utility } from "./shared/utility";
@@ -32,6 +32,65 @@ export function activate(context: ExtensionContext) {
   const firebirdTreeDataProvider = new FirebirdTreeDataProvider(context);
   const firebirdMockData = new MockData(context.extensionPath);
   const firebirdQueryResults = new QueryResultsView(context.extensionPath);
+
+  const showQueryResults = (result: any) => {
+    firebirdQueryResults.display(result, config.recordsPerPage, Utility.getLastQueryMetrics());
+  };
+
+  const pickActiveConnection = async (): Promise<boolean> => {
+    return connectionPicker(context)
+      .then(picked => {
+        if (picked) {
+          const id: string = picked.detail.split(": ").pop();
+          Global.setActiveConnectionById(context, id);
+          return true;
+        }
+        return false;
+      })
+      .catch(() => false);
+  };
+
+  const executeQuery = async (scope: "auto" | "selection" | "document" = "auto") => {
+    try {
+      const res = await Utility.runQueryWithScope(scope);
+      if (!res) return;
+      if (res[0] && "message" in res[0]) {
+        logger.info(res[0].message);
+        logger.showInfo(res[0].message);
+        commands.executeCommand("firebird.explorer.refresh");
+      } else {
+        showQueryResults(res);
+      }
+    } catch (error) {
+      if (error.message === "No Firebird database selected!") {
+        const picked = await pickActiveConnection();
+        if (picked) return executeQuery(scope);
+        return;
+      }
+      logger.error(error.message);
+      if (error.notify) {
+        logger.showError(error.message, error.options || []).then(selected => {
+          if (selected === "New SQL Document") {
+            commands.executeCommand("firebird.explorer.newSqlDocument");
+          }
+          if (selected === "Set Active Database") {
+            commands.executeCommand("firebird.chooseActive");
+          }
+        });
+      } else {
+        logger
+          .showError("Oops! Something went wrong. Check the log output for more details!", [
+            "Cancel",
+            "Show Log Output"
+          ])
+          .then(selected => {
+            if (selected === "Show Log Output") {
+              logger.showOutput();
+            }
+          });
+      }
+    }
+  };
 
   context.subscriptions.push(
     window.registerTreeDataProvider(Constants.FirebirdExplorerViewId, firebirdTreeDataProvider),
@@ -136,40 +195,31 @@ export function activate(context: ExtensionContext) {
   /* COMMAND: run document query */
   context.subscriptions.push(
     commands.registerCommand("firebird.runQuery", () => {
-      Utility.runQuery()
-        .then(res => {
-          if (res[0] && "message" in res[0]) {
-            logger.info(res[0].message);
-            logger.showInfo(res[0].message);
-            commands.executeCommand("firebird.explorer.refresh");
-          } else {
-            firebirdQueryResults.display(res, config.recordsPerPage, Utility.getLastQueryMetrics());
-          }
-        })
-        .catch(error => {
-          logger.error(error.message);
-          if (error.notify) {
-            logger.showError(error.message, error.options || []).then(selected => {
-              if (selected === "New SQL Document") {
-                commands.executeCommand("firebird.explorer.newSqlDocument");
-              }
-              if (selected === "Set Active Database") {
-                commands.executeCommand("firebird.chooseActive");
-              }
-            });
-          } else {
-            logger
-              .showError("Oops! Something went wrong. Check the log output for more details!", [
-                "Cancel",
-                "Show Log Output"
-              ])
-              .then(selected => {
-                if (selected === "Show Log Output") {
-                  logger.showOutput();
-                }
-              });
-          }
-        });
+      executeQuery("document");
+    })
+  );
+
+  context.subscriptions.push(
+    commands.registerCommand("firebird.runQuerySelection", () => {
+      executeQuery("selection");
+    })
+  );
+
+  context.subscriptions.push(
+    commands.registerCommand("firebird.runQueryDocument", () => {
+      executeQuery("document");
+    })
+  );
+
+  context.subscriptions.push(
+    commands.registerCommand("firebird.results.show", () => {
+      firebirdQueryResults.reopen();
+    })
+  );
+
+  context.subscriptions.push(
+    commands.registerCommand("firebird.results.clear", () => {
+      firebirdQueryResults.clear();
     })
   );
 
@@ -179,7 +229,7 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(
     commands.registerCommand("firebird.showDatabaseInfo", (databaseNode: NodeDatabase) => {
       databaseNode.showDatabaseInfo().then(result => {
-        firebirdQueryResults.display(result, config.recordsPerPage, Utility.getLastQueryMetrics());
+        showQueryResults(result);
       });
     })
   );
@@ -190,7 +240,7 @@ export function activate(context: ExtensionContext) {
       tableNode
         .showTableInfo()
         .then(result => {
-          firebirdQueryResults.display(result, config.recordsPerPage, Utility.getLastQueryMetrics());
+          showQueryResults(result);
         })
         .catch(err => {
           logger.error(err);
@@ -212,7 +262,49 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(
     commands.registerCommand("firebird.selectAllRecords", (tableNode: NodeTable) => {
       tableNode.selectAllRecords().then(result => {
-        firebirdQueryResults.display(result, config.recordsPerPage, Utility.getLastQueryMetrics());
+        showQueryResults(result);
+      });
+    })
+  );
+
+  context.subscriptions.push(
+    commands.registerCommand("firebird.table.previewRecords", (tableNode: NodeTable) => {
+      tableNode.previewRecords(config.previewRecordLimit).then(result => {
+        showQueryResults(result);
+      });
+    })
+  );
+
+  context.subscriptions.push(
+    commands.registerCommand("firebird.table.countRecords", (tableNode: NodeTable) => {
+      tableNode.countRecords().then(result => {
+        showQueryResults(result);
+      });
+    })
+  );
+
+  context.subscriptions.push(
+    commands.registerCommand("firebird.table.insertSelectTemplate", (tableNode: NodeTable) => {
+      tableNode.insertSelectTemplate();
+    })
+  );
+
+  context.subscriptions.push(
+    commands.registerCommand("firebird.table.insertPreviewTemplate", (tableNode: NodeTable) => {
+      tableNode.insertSelectTemplate(config.previewRecordLimit);
+    })
+  );
+
+  context.subscriptions.push(
+    commands.registerCommand("firebird.table.copyName", (tableNode: NodeTable) => {
+      tableNode.copyName();
+    })
+  );
+
+  context.subscriptions.push(
+    commands.registerCommand("firebird.view.previewRecords", (viewNode: NodeView) => {
+      viewNode.previewRecords(config.previewRecordLimit).then(result => {
+        showQueryResults(result);
       });
     })
   );
@@ -228,7 +320,7 @@ export function activate(context: ExtensionContext) {
   context.subscriptions.push(
     commands.registerCommand("firebird.selectFieldRecords", (fieldNode: NodeField) => {
       fieldNode.selectAllSingleFieldRecords().then(result => {
-        firebirdQueryResults.display(result, config.recordsPerPage, Utility.getLastQueryMetrics());
+        showQueryResults(result);
       });
     })
   );

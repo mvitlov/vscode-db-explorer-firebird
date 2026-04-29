@@ -2,6 +2,13 @@
 
 All notable changes to the "vscode-db-explorer-firebird" extension will be documented in this file.
 
+## Unreleased
+
+### Changed
+- Run SQL now executes the active document by default and opens the database picker when no active connection is set.
+- Added bind parameter prompts for positional and named placeholders.
+- Refined the query results view with a compact header, popover column filters, grouped export actions, and horizontal scroll fixes.
+
 ## 0.0.4 - 2019-03-11
 
 ### Fixed

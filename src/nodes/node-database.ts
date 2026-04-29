@@ -1,12 +1,12 @@
 import { ExtensionContext, TreeItem, TreeItemCollapsibleState, Uri } from "vscode";
 import { join } from "path";
-import { NodeTable, NodeInfo } from "./";
+import { NodeTable, NodeInfo, NodeCollection, NodeView } from "./";
 import { ConnectionOptions, FirebirdTree } from "../interfaces";
 import { getOptions, Constants } from "../config";
 import { Utility } from "../shared/utility";
 import { Global } from "../shared/global";
 import { FirebirdTreeDataProvider } from "../firebirdTreeDataProvider";
-import { databaseInfoQry, getTablesQuery } from "../shared/queries";
+import { databaseInfoQry, getTablesQuery, getViewsQuery } from "../shared/queries";
 import { logger } from "../logger/logger";
 
 export class NodeDatabase implements FirebirdTree {
@@ -14,15 +14,19 @@ export class NodeDatabase implements FirebirdTree {
 
   // list databases grouped by host names
   public getTreeItem(): TreeItem {
+    const databaseName = this.dbDetails.database
+      .split("\\")
+      .pop()
+      .split("/")
+      .pop();
+    const isActive = Global.isActiveConnection(this.dbDetails);
+
     return {
-      label: this.dbDetails.database
-        .split("\\")
-        .pop()
-        .split("/")
-        .pop(),
+      label: databaseName,
       collapsibleState: TreeItemCollapsibleState.Collapsed,
       contextValue: "database",
       tooltip: `[DATABASE] ${this.dbDetails.database}`,
+      description: isActive ? "active" : "",
       iconPath: {
         dark: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "db.svg")),
         light: Uri.file(join(__filename, "..", "..", "..", "resources", "icons", "db.svg"))
@@ -32,22 +36,29 @@ export class NodeDatabase implements FirebirdTree {
 
   // list database tables
   public async getChildren(): Promise<any> {
-    let tablesQry = getTablesQuery(getOptions().maxTablesCount);
+    const options = getOptions();
+    let tablesQry = getTablesQuery(options.maxTablesCount);
+    let viewsQry = getViewsQuery(options.maxTablesCount);
 
-    return Utility.createConnection(this.dbDetails)
-      .then(connection => {
-        return Utility.queryPromise<any[]>(connection, tablesQry)
-          .then(tables => {
-            return tables.map<NodeTable>(table => {
-              return new NodeTable(this.dbDetails, table.TABLE_NAME);
-            });
-          })
-          .catch(err => {
-            return [new NodeInfo(err)];
-          });
+    return Promise.all([
+      Utility.createConnection(this.dbDetails).then(connection => Utility.queryPromise<any[]>(connection, tablesQry)),
+      Utility.createConnection(this.dbDetails).then(connection => Utility.queryPromise<any[]>(connection, viewsQry))
+    ])
+      .then(([tables, views]) => {
+        const tableNodes = tables.map<NodeTable>(table => {
+          return new NodeTable(this.dbDetails, table.TABLE_NAME);
+        });
+        const viewNodes = views.map<NodeView>(view => {
+          return new NodeView(this.dbDetails, view.VIEW_NAME);
+        });
+
+        return [
+          new NodeCollection("Tables", "table", tableNodes, "tableCollection"),
+          new NodeCollection("Views", "symbol-interface", viewNodes, "viewCollection")
+        ];
       })
       .catch(err => {
-        logger.error(err);
+        return [new NodeInfo(err)];
       });
   }
 
