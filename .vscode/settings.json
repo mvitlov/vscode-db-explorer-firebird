@@ -17,6 +17,5 @@
   "liveServer.settings.CustomBrowser": "chrome",
   "liveServer.settings.host": "localhost",
   "liveServer.settings.mount": [],
-  "liveServer.settings.root": "./src/mock-data/htmlContent",
   "svg.preview.background": "editor"
 }

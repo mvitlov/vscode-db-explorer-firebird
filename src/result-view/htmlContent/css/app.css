@@ -284,11 +284,15 @@ body {
 .ag-theme-custom .ag-header-cell {
   background-color: var(--vscode-editorGroupHeader-tabsBackground);
   color: var(--vscode-editor-foreground);
-  border-right: 2px solid var(--vscode-panel-border);
+  border-right: 2px solid var(--vscode-editor-background);
   font-weight: 600;
   padding: 8px;
   display: flex;
   align-items: center;
+}
+
+.ag-theme-custom .ag-header-cell ::hover{
+  filter: brightness(150);
 }
 
 .ag-theme-custom .ag-header-cell-text {
@@ -351,7 +355,7 @@ body {
   color: var(--vscode-input-foreground);
   border: 1px solid var(--vscode-input-border, var(--vscode-panel-border));
   border-radius: 4px;
-  padding: 6px 8px;
+  padding: 5px 5px 5px 25px;
   font-size: 12px;
   font-family: var(--vscode-font-family);
 }

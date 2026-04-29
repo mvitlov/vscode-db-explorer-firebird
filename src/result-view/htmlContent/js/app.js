@@ -311,8 +311,18 @@ function showData(data) {
     rowHeight: runtimeState.compactRows ? 28 : 32,
     headerHeight: 40,
     floatingFiltersHeight: 40,
+    // enableRowGroup: true,
+    // enableGroupEdit:true,
+    // enableRowPinning:true,
+    // onRowGroupOpened:true,
+    // enableCellSpan:true,
+    // enableRangeHandle:true,
+    // enableRtl:true,
+    // groupRowRenderer:true,
+    // enableCharts:true,
     defaultColDef: {
       resizable: true,
+      editable: true,
       sortable: true,
       filter: true
     },
@@ -324,7 +334,6 @@ function showData(data) {
     paginationPageSizeSelector: [50, 100, 500, 1000],
     suppressPaginationPanel: false,
     quickFilterText: "",
-    floatingFilter: false
   };
 
   const container = document.getElementById("ag-grid-container");
