@@ -392,11 +392,11 @@
     "@types/vscode": "1.118.0",
     "@typescript-eslint/eslint-plugin": "8.59.1",
     "@typescript-eslint/parser": "8.59.1",
-    "eslint": "10.2.1",
+    "eslint": "10.3.0",
     "typescript": "6.0.3"
   },
   "engines": {
-    "vscode": "^1.116.0"
+    "vscode": "^1.118.0"
   },
   "icon": "resources/img/icon.png",
   "galleryBanner": {
